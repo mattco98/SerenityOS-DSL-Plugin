@@ -1,32 +1,37 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.grammarkit.tasks.GenerateLexerTask
+import org.jetbrains.grammarkit.tasks.GenerateParserTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun properties(key: String) = providers.gradleProperty(key)
 fun environment(key: String) = providers.environmentVariable(key)
 
 plugins {
-    id("java") // Java support
-    alias(libs.plugins.kotlin) // Kotlin support
-    alias(libs.plugins.gradleIntelliJPlugin) // Gradle IntelliJ Plugin
-    alias(libs.plugins.changelog) // Gradle Changelog Plugin
-    alias(libs.plugins.qodana) // Gradle Qodana Plugin
-    alias(libs.plugins.kover) // Gradle Kover Plugin
+    idea
+    kotlin("jvm") version "1.9.20"
+    id("org.jetbrains.intellij") version "1.16.0"
+    id("org.jetbrains.grammarkit") version "2022.3.2"
+    alias(libs.plugins.changelog)
 }
 
 group = properties("pluginGroup").get()
 version = properties("pluginVersion").get()
 
-// Configure project's dependencies
 repositories {
     mavenCentral()
 }
 
-// Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
-//    implementation(libs.annotations)
 }
 
-// Set the JVM language level used to build the project. Use Java 11 for 2020.3+, and Java 17 for 2022.2+.
+intellij {
+    pluginName = properties("pluginName")
+    version = properties("platformVersion")
+    type = properties("platformType")
+    plugins = properties("platformPlugins").map { it.split(',').map(String::trim).filter(String::isNotEmpty) }
+}
+
 kotlin {
     @Suppress("UnstableApiUsage")
     jvmToolchain {
@@ -35,40 +40,61 @@ kotlin {
     }
 }
 
-// Configure Gradle IntelliJ Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
-intellij {
-    pluginName = properties("pluginName")
-    version = properties("platformVersion")
-    type = properties("platformType")
-
-    // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
-    plugins = properties("platformPlugins").map { it.split(',').map(String::trim).filter(String::isNotEmpty) }
-}
-
-// Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
 changelog {
     groups.empty()
     repositoryUrl = properties("pluginRepositoryUrl")
 }
 
-// Configure Gradle Qodana Plugin - read more: https://github.com/JetBrains/gradle-qodana-plugin
-qodana {
-    cachePath = provider { file(".qodana").canonicalPath }
-    reportPath = provider { file("build/reports/inspections").canonicalPath }
-    saveReport = true
-    showReport = environment("QODANA_SHOW_REPORT").map { it.toBoolean() }.getOrElse(false)
-}
-
-// Configure Gradle Kover Plugin - read more: https://github.com/Kotlin/kotlinx-kover#configuration
-koverReport {
-    defaults {
-        xml {
-            onCheck = true
-        }
-    }
-}
+sourceSets["main"].java.srcDirs("src/main/gen")
 
 tasks {
+    properties("javaVersion").get().let {
+        withType<JavaCompile> {
+            sourceCompatibility = it
+            targetCompatibility = it
+        }
+        withType<KotlinCompile> {
+            kotlinOptions {
+                jvmTarget = it
+                freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn", "-Xjvm-default=all")
+            }
+        }
+    }
+
+    generateLexer.configure { enabled = false }
+    generateParser.configure { enabled = false }
+
+    task<GenerateLexerTask>("generateIDLLexer") {
+        group = "grammarkit"
+        sourceFile.set(file("src/main/resources/grammar/SerenityOS IDL.flex"))
+        targetDir.set("src/main/gen/me/mattco/serenityos/idl")
+        targetClass.set("IDLLexer.java")
+        purgeOldFiles.set(true)
+        skeleton
+    }
+
+    task<GenerateParserTask>("generateIDLParser") {
+        group = "grammarkit"
+        sourceFile.set(file("src/main/resources/grammar/SerenityOS IDL.bnf"))
+        targetRoot.set("src/main/gen")
+        pathToParser.set("me/mattco/serenityos/idl/IDLParser.java")
+        pathToPsiRoot.set("me/mattco/serenityos/psi")
+        purgeOldFiles.set(true)
+    }
+
+    task("generateAll") {
+        group = "grammarkit"
+        dependsOn("generateIDLLexer", "generateIDLParser")
+    }
+
+    compileKotlin {
+        dependsOn("generateAll")
+
+        kotlinOptions {
+            freeCompilerArgs = listOf("-Xcontext-receivers")
+        }
+    }
+
     wrapper {
         gradleVersion = properties("gradleVersion").get()
     }
@@ -78,7 +104,6 @@ tasks {
         sinceBuild = properties("pluginSinceBuild")
         untilBuild = properties("pluginUntilBuild")
 
-        // Extract the <!-- Plugin description --> section from README.md and provide for the plugin's manifest
         pluginDescription = providers.fileContents(layout.projectDirectory.file("README.md")).asText.map {
             val start = "<!-- Plugin description -->"
             val end = "<!-- Plugin description end -->"
@@ -105,8 +130,6 @@ tasks {
         }
     }
 
-    // Configure UI tests plugin
-    // Read more: https://github.com/JetBrains/intellij-ui-test-robot
     runIdeForUiTests {
         systemProperty("robot-server.port", "8082")
         systemProperty("ide.mac.message.dialogs.as.sheets", "false")
@@ -114,18 +137,9 @@ tasks {
         systemProperty("jb.consents.confirmation.enabled", "false")
     }
 
-    signPlugin {
-        certificateChain = environment("CERTIFICATE_CHAIN")
-        privateKey = environment("PRIVATE_KEY")
-        password = environment("PRIVATE_KEY_PASSWORD")
-    }
-
     publishPlugin {
         dependsOn("patchChangelog")
         token = environment("PUBLISH_TOKEN")
-        // The pluginVersion is based on the SemVer (https://semver.org) and supports pre-release labels, like 2.1.7-alpha.3
-        // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
-        // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
         channels = properties("pluginVersion").map { listOf(it.split('-').getOrElse(1) { "default" }.split('.').first()) }
     }
 }

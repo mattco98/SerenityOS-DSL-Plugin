@@ -1,18 +1,80 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.mattco98.serenityosintellijplugin</id>
-    <name>serenityos-intellij-plugin Template</name>
+    <id>me.mattco.serenityos-dsl</id>
+    <name>SerenityOS-DSL</name>
     <vendor>mattco98</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.clion</depends>
+    <depends>com.intellij.cidr.base</depends>
+    <depends>com.intellij.cidr.lang</depends>
 
-    <resource-bundle>messages.MyBundle</resource-bundle>
+    <description><![CDATA[
+        Adds syntax highlighting for SerenityOS-specific file types.
+        <br/>
+        Currently only supports .idl files.
+    ]]></description>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.mattco98.serenityosintellijplugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <fileType
+                name="SerenityOS IDL"
+                implementationClass="me.mattco.serenityos.idl.IDLFileType"
+                fieldName="INSTANCE"
+                language="SerenityOS IDL"
+                extensions="idl"
+        />
+        <lang.parserDefinition
+                language="SerenityOS IDL"
+                implementationClass="me.mattco.serenityos.idl.IDLParserDefinition"
+        />
+        <lang.syntaxHighlighterFactory
+                language="SerenityOS IDL"
+                implementationClass="me.mattco.serenityos.idl.IDLSyntaxHighlighterFactory"
+        />
+        <lang.foldingBuilder
+                language="SerenityOS IDL"
+                implementationClass="me.mattco.serenityos.idl.IDLBlockFoldingBuilder"
+        />
+        <lang.foldingBuilder
+                language="SerenityOS IDL"
+                implementationClass="me.mattco.serenityos.idl.IDLImportFoldingBuilder"
+        />
+        <lang.commenter
+                language="SerenityOS IDL"
+                implementationClass="me.mattco.serenityos.idl.IDLCommenter"
+        />
+        <lang.findUsagesProvider
+                language="SerenityOS IDL"
+                implementationClass="me.mattco.serenityos.idl.IDLFindUsagesProvider"
+        />
+        <annotator
+                language="SerenityOS IDL"
+                implementationClass="me.mattco.serenityos.idl.annotation.IDLSyntaxAnnotator"
+        />
+        <annotator
+                language="SerenityOS IDL"
+                implementationClass="me.mattco.serenityos.idl.annotation.IDLErrorAnnotator"
+        />
+        <codeInsight.lineMarkerProvider
+                language="SerenityOS IDL"
+                implementationClass="me.mattco.serenityos.idl.IDLLineMarkerProvider"
+        />
+        <codeInsight.lineMarkerProvider
+                language="ObjectiveC"
+                implementationClass="me.mattco.serenityos.idl.IDLLineMarkerProvider"
+        />
+        <codeInsight.lineMarkerProvider
+                language="ObjectiveC++"
+                implementationClass="me.mattco.serenityos.idl.IDLLineMarkerProvider"
+        />
+        <codeInsight.lineMarkerProvider
+                language="ObjectiveC/C++"
+                implementationClass="me.mattco.serenityos.idl.IDLLineMarkerProvider"
+        />
+        <colorSettingsPage implementation="me.mattco.serenityos.idl.IDLColorSettingsPage" />
+        <projectService
+                serviceInterface="me.mattco.serenityos.idl.project.IDLProjectService"
+                serviceImplementation="me.mattco.serenityos.idl.project.IDLProjectServiceImpl"
+        />
     </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.mattco98.serenityosintellijplugin.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
 </idea-plugin>
