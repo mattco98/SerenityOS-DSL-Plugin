@@ -10,7 +10,7 @@ fun environment(key: String) = providers.environmentVariable(key)
 plugins {
     idea
     kotlin("jvm") version "1.9.20"
-    id("org.jetbrains.intellij") version "1.16.0"
+    id("org.jetbrains.intellij") version "1.17.0"
     id("org.jetbrains.grammarkit") version "2022.3.2"
     alias(libs.plugins.changelog)
 }
