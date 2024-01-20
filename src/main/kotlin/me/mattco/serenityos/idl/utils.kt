@@ -10,13 +10,15 @@ fun PsiElement.prevSiblings() = generateSequence(this.prevSibling) { it.prevSibl
 fun PsiElement.nextSiblings() = generateSequence(this.nextSibling) { it.nextSibling }.filter { it !is PsiWhiteSpace }
 
 inline fun <reified T> PsiElement.prevSiblingOfType() = prevSiblings().find { it is T } as T?
-inline fun <reified T> PsiElement.nextSiblingOfType() = nextSiblings().find { it is T } as T?
+inline fun <reified T> PsiElement.nextSiblingOfType() = nextSiblings().find { it is T } as T
+
+inline fun <reified T> PsiElement.prevSiblingsOfType() = prevSiblings().filterIsInstance<T>()
+inline fun <reified T> PsiElement.nextSiblingsOfType() = nextSiblings().filterIsInstance<T>()
 
 val PsiElement.allChildren: Sequence<PsiElement>
     get() = generateSequence(firstChild) { it.nextSibling }
 
-inline fun <reified T : PsiElement> PsiElement.findChildrenOfType(): List<T> =
-    allChildren.filterIsInstance<T>().toList()
+inline fun <reified T : PsiElement> PsiElement.findChildrenOfType() = allChildren.filterIsInstance<T>()
 
 inline fun <reified T : PsiElement> PsiElement.findChildOfType(): T? = findChildrenOfType<T>().singleOrNull()
 

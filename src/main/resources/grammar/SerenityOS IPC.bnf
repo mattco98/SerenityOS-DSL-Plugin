@@ -46,5 +46,7 @@ SyncTrailer ::= SYNC_ARROW ParameterList
 AsyncTrailer ::= ASYNC_ARROW
 
 Type ::= NAMESPACE? TypePart (NAMESPACE TypePart)*
-TypePart ::= IDENTIFIER TypeTemplates?
+TypePart ::= IDENTIFIER TypeTemplates? {
+    mixin="me.mattco.serenityos.ipc.psi.mixins.IPCTypePartMixin"
+}
 TypeTemplates ::= OPEN_ANGLE Type (COMMA Type)* CLOSE_ANGLE
