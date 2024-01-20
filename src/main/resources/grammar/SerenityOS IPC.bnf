@@ -34,7 +34,9 @@ QuoteIncludePath ::= QUOTE INCLUDE_IDENTIFIER QUOTE {
     elementType=IncludePath
 }
 
-Endpoint ::= KEYWORD_ENDPOINT IDENTIFIER OPEN_CURLY EndpointFunction* CLOSE_CURLY
+Endpoint ::= KEYWORD_ENDPOINT IDENTIFIER OPEN_CURLY EndpointFunction* CLOSE_CURLY {
+    mixin="me.mattco.serenityos.ipc.psi.mixins.IPCEndpointMixin"
+}
 EndpointFunction ::= IDENTIFIER ParameterList Trailer
 
 ParameterList ::= OPEN_PAREN [Parameter (COMMA Parameter)*] CLOSE_PAREN
