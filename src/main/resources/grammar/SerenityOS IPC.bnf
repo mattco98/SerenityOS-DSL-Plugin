@@ -22,7 +22,10 @@
 
 File ::= Include* Endpoint
 
-Include ::= KEYWORD_INCLUDE (AngleIncludePath | QuoteIncludePath)
+Include ::= KEYWORD_INCLUDE (AngleIncludePath | QuoteIncludePath) {
+    mixin="me.mattco.serenityos.ipc.psi.mixins.IPCIncludeMixin"
+}
+
 fake IncludePath ::= (OPEN_ANGLE | QUOTE) INCLUDE_IDENTIFIER (CLOSE_ANGLE | QUOTE)
 AngleIncludePath ::= OPEN_ANGLE INCLUDE_IDENTIFIER CLOSE_ANGLE {
     elementType=IncludePath

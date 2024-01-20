@@ -103,5 +103,9 @@
                 implementationClass="me.mattco.serenityos.ipc.IPCSyntaxAnnotator"
         />
         <colorSettingsPage implementation="me.mattco.serenityos.ipc.IPCColorSettingsPage" />
+        <projectService
+                serviceInterface="me.mattco.serenityos.ipc.project.IPCProjectService"
+                serviceImplementation="me.mattco.serenityos.ipc.project.IPCProjectServiceImpl"
+        />
     </extensions>
 </idea-plugin>

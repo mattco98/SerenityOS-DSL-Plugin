@@ -10,7 +10,7 @@ import me.mattco.serenityos.idl.psi.api.IDLImportStatement
 import me.mattco.serenityos.idl.psi.singleRef
 import kotlin.io.path.Path
 
-abstract class IDLImportStatementMixin(node: ASTNode) : IDLNamedElement(node), IDLImportStatement, IDLNameIdentifierOwner {
+abstract class IDLImportStatementMixin(node: ASTNode) : IDLNamedElement(node), IDLImportStatement {
     override fun getReference(): PsiReference? = singleRef(IDLImportStatement::resolveFile)
 
     override fun getNameIdentifier() = importPath
