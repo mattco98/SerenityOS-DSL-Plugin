@@ -4,7 +4,7 @@ import ai.grazie.utils.dropPrefix
 import com.intellij.psi.PsiComment
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiWhiteSpace
-import com.intellij.psi.util.parentOfType
+import me.mattco.serenityos.common.DSLAnnotator
 import me.mattco.serenityos.idl.*
 import me.mattco.serenityos.idl.psi.IDLDeclaration
 import me.mattco.serenityos.idl.psi.api.IDLCallbackInterface
@@ -15,7 +15,7 @@ import me.mattco.serenityos.idl.psi.api.IDLInterfaceMixin
 import java.net.MalformedURLException
 import java.net.URL
 
-class IDLErrorAnnotator : IDLAnnotator() {
+class IDLErrorAnnotator : DSLAnnotator() {
     override fun annotate(element: PsiElement, holder: Holder) = with(holder) {
         if (element is IDLIdent) {
             if (element.reference != null && element.reference?.resolve() == null) {

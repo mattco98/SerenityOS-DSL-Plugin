@@ -5,10 +5,11 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
+import me.mattco.serenityos.common.DSLAnnotator
 import me.mattco.serenityos.idl.Highlights
 import me.mattco.serenityos.idl.psi.api.*
 
-class IDLSyntaxAnnotator : IDLAnnotator(), DumbAware {
+class IDLSyntaxAnnotator : DSLAnnotator(), DumbAware {
     override fun annotate(element: PsiElement, holder: Holder) = with(holder) {
         when (element) {
             is IDLImportPath ->

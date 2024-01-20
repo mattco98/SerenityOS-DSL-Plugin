@@ -1,11 +1,12 @@
 package me.mattco.serenityos.idl
 
 import com.intellij.extapi.psi.PsiFileBase
+import com.intellij.lang.Language
 import com.intellij.openapi.fileTypes.LanguageFileType
 import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.FileViewProvider
 
-object IDLLanguage : com.intellij.lang.Language("SerenityOS IDL") {
+object IDLLanguage : Language("SerenityOS IDL") {
     val FILE_ICON = IconLoader.getIcon("/META-INF/pluginIcon.svg", IDLLanguage::class.java)
 }
 

@@ -16,6 +16,7 @@
     ]]></description>
 
     <extensions defaultExtensionNs="com.intellij">
+        <!-- IDL  -->
         <fileType
                 name="SerenityOS IDL"
                 implementationClass="me.mattco.serenityos.idl.IDLFileType"
@@ -76,5 +77,31 @@
                 serviceInterface="me.mattco.serenityos.idl.project.IDLProjectService"
                 serviceImplementation="me.mattco.serenityos.idl.project.IDLProjectServiceImpl"
         />
+
+        <!-- IPC  -->
+        <fileType
+                name="SerenityOS IPC"
+                implementationClass="me.mattco.serenityos.ipc.IPCFileType"
+                fieldName="INSTANCE"
+                language="SerenityOS IPC"
+                extensions="ipc"
+        />
+        <lang.parserDefinition
+                language="SerenityOS IPC"
+                implementationClass="me.mattco.serenityos.ipc.IPCParserDefinition"
+        />
+        <lang.syntaxHighlighterFactory
+                language="SerenityOS IPC"
+                implementationClass="me.mattco.serenityos.ipc.IPCSyntaxHighlighterFactory"
+        />
+        <lang.commenter
+                language="SerenityOS IPC"
+                implementationClass="me.mattco.serenityos.ipc.IPCCommenter"
+        />
+        <annotator
+                language="SerenityOS IPC"
+                implementationClass="me.mattco.serenityos.ipc.IPCSyntaxAnnotator"
+        />
+        <colorSettingsPage implementation="me.mattco.serenityos.ipc.IPCColorSettingsPage" />
     </extensions>
 </idea-plugin>

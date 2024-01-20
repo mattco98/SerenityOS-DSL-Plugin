@@ -1,4 +1,4 @@
-package me.mattco.serenityos.idl.annotation
+package me.mattco.serenityos.common
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
@@ -6,11 +6,8 @@ import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
-import me.mattco.serenityos.idl.descendantOfType
-import me.mattco.serenityos.idl.psi.IDLDeclaration
-import java.util.concurrent.locks.ReentrantLock
 
-abstract class IDLAnnotator : Annotator {
+abstract class DSLAnnotator : Annotator {
     final override fun annotate(element: PsiElement, holder: AnnotationHolder) {
         annotate(element, Holder(holder))
     }

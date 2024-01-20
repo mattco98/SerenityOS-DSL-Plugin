@@ -64,7 +64,7 @@ tasks {
     generateLexer.configure { enabled = false }
     generateParser.configure { enabled = false }
 
-    val supportedDSLs = listOf("IDL")
+    val supportedDSLs = listOf("IDL", "IPC")
 
     for (dsl in supportedDSLs) {
         task<GenerateLexerTask>("generate${dsl}Lexer") {
