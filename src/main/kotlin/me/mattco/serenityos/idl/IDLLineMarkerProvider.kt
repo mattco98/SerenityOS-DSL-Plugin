@@ -5,6 +5,7 @@ import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
 import com.intellij.icons.AllIcons
+import com.intellij.openapi.progress.ProgressManager
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.descendantsOfType
 import com.jetbrains.cidr.lang.psi.OCFunctionDeclaration
@@ -17,22 +18,33 @@ import me.mattco.serenityos.idl.psi.api.IDLConstructor
 import me.mattco.serenityos.idl.psi.api.IDLOperation
 
 class IDLLineMarkerProvider : LineMarkerProvider {
-    override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<*>? {
-        // TODO: IDL -> C++ doesn't work at all
-        // if (element is IDLDeclaration) {
-        //     val cppDecls = element.idlProject.findCppDeclarations(
-        //         element.containingFile.parent?.virtualFile ?: return null,
-        //         element.name ?: return null,
-        //     )
-        //
-        //     // TODO: This should probably only ever be a single element
-        //     val decl = cppDecls.firstOrNull() ?: return null
-        //     return NavigationGutterIconBuilder.create(AllIcons.Gutter.ImplementedMethod)
-        //         .setTarget(decl)
-        //         .setTooltipText("Jump to C++ implementation")
-        //         .createLineMarkerInfo(element.nameIdentifier ?: return null)
-        // }
+    override fun collectSlowLineMarkers(
+        elements: MutableList<out PsiElement>,
+        result: MutableCollection<in LineMarkerInfo<*>>
+    ) {
+        ProgressManager.checkCanceled()
 
+        for (element in elements) {
+            if (element !is IDLDeclaration)
+                continue
+
+            val cppDecls = element.idlProject.findCppDeclarations(
+                element.containingFile.parent?.virtualFile ?: continue,
+                element.name ?: continue,
+            )
+
+            // TODO: This should probably only ever be a single element
+            val decl = cppDecls.firstOrNull() ?: continue
+            result.add(
+                NavigationGutterIconBuilder.create(AllIcons.Gutter.ImplementedMethod)
+                    .setTarget(decl)
+                    .setTooltipText("Jump to C++ implementation")
+                    .createLineMarkerInfo(element.nameIdentifier ?: continue)
+            )
+        }
+    }
+
+    override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<*>? {
         if (element is OCStructLike) {
             val idlDecls = element.idlProject.findIDLDeclarations(
                 element.containingFile.parent?.virtualFile ?: return null,
@@ -51,7 +63,8 @@ class IDLLineMarkerProvider : LineMarkerProvider {
         // only show an icon for the struct
         if (element is OCFunctionDeclaration && !element.containingOCFile.isHeader) {
             val ns = element.namespaceQualifier?.text ?: (element.parent as? OCStructLike)?.name ?: return null
-            val idlDecls = element.idlProject.findIDLDeclarations(element.containingFile.parent?.virtualFile ?: return null, ns)
+            val idlDecls =
+                element.idlProject.findIDLDeclarations(element.containingFile.parent?.virtualFile ?: return null, ns)
             idlDecls.forEach {
                 val member = findIDLMember(it, element.name ?: return@forEach)
                 if (member != null) {

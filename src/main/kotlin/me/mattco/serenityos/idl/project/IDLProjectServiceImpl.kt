@@ -4,9 +4,15 @@ import com.intellij.openapi.project.DumbService
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.toNioPathOrNull
+import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScopes
+import com.intellij.psi.util.elementType
+import com.intellij.psi.util.findParentInFile
+import com.jetbrains.cidr.lang.parser.OCElementTypes
+import com.jetbrains.cidr.lang.psi.OCCppNamespace
+import com.jetbrains.cidr.lang.psi.OCElement
 import com.jetbrains.cidr.lang.psi.OCFile
 import com.jetbrains.cidr.lang.psi.OCStructLike
 import me.mattco.serenityos.idl.descendentsOfType
@@ -44,9 +50,22 @@ class IDLProjectServiceImpl(private val project: Project) : IDLProjectService {
             return emptySet()
 
         val scope = GlobalSearchScopes.directoryScope(project, directory, true)
-        val virtualFiles = FilenameIndex.getAllFilesByExt(project, "idl", scope)
-        val declarations = mutableSetOf<IDLDeclaration>()
         val manager = PsiManager.getInstance(project)
+        val declarations = mutableSetOf<IDLDeclaration>()
+
+        // Try to find an exact match first
+        var virtualFiles = FilenameIndex.getVirtualFilesByName("$name.idl", scope)
+        if (virtualFiles.isNotEmpty()) {
+            val file = manager.findFile(virtualFiles.first()) as? IDLFile ?: return emptySet()
+            // Assume that if this file doesn't have it, then we won't be able to find it
+            val decl = IDLResolver(file).findDeclaration(name)
+            if (decl != null)
+                declarations.add(decl)
+
+            return declarations
+        }
+
+        virtualFiles = FilenameIndex.getAllFilesByExt(project, "idl", scope)
         virtualFiles.forEach {
             val file = manager.findFile(it) as? IDLFile ?: return@forEach
             val decl = IDLResolver(file).findDeclaration(name)
@@ -61,9 +80,23 @@ class IDLProjectServiceImpl(private val project: Project) : IDLProjectService {
             return emptySet()
 
         val scope = GlobalSearchScopes.directoryScope(project, directory, true)
-        val virtualFiles = FilenameIndex.getAllFilesByExt(project, "h", scope)
-        val declarations = mutableSetOf<OCStructLike>()
         val manager = PsiManager.getInstance(project)
+        val declarations = mutableSetOf<OCStructLike>()
+
+        // Try to find an exact match first
+        var virtualFiles = FilenameIndex.getVirtualFilesByName("$name.h", scope)
+        if (virtualFiles.isNotEmpty()) {
+            val file = manager.findFile(virtualFiles.first()) as? OCFile ?: return emptySet()
+            // Assume that if this file doesn't have it, then we won't be able to find it
+            for (decl in file.descendentsOfType<OCStructLike>()) {
+                if (decl.name == name && hasWebNamespace(decl))
+                    declarations.add(decl)
+            }
+
+            return declarations
+        }
+
+        virtualFiles = FilenameIndex.getAllFilesByExt(project, "h", scope)
         for (virtualFile in virtualFiles) {
             val file = manager.findFile(virtualFile) as? OCFile ?: continue
             for (decl in file.descendentsOfType<OCStructLike>()) {
@@ -76,12 +109,17 @@ class IDLProjectServiceImpl(private val project: Project) : IDLProjectService {
     }
 
     private fun hasWebNamespace(struct: OCStructLike): Boolean {
-        var ns = struct.namespaceQualifier
+        var ns = getNamespace(struct)
         while (ns != null) {
             if (ns.name == "Web")
                 return true
-            ns = ns.namespaceQualifier
+            ns = getNamespace(ns)
         }
         return false
+    }
+
+    private fun getNamespace(element: OCElement): OCCppNamespace? {
+        val namespace = element.findParentInFile { it.elementType == OCElementTypes.CPP_NAMESPACE }
+        return if (namespace == null) null else namespace as OCCppNamespace
     }
 }
