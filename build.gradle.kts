@@ -64,27 +64,31 @@ tasks {
     generateLexer.configure { enabled = false }
     generateParser.configure { enabled = false }
 
-    task<GenerateLexerTask>("generateIDLLexer") {
-        group = "grammarkit"
-        sourceFile.set(file("src/main/resources/grammar/SerenityOS IDL.flex"))
-        targetDir.set("src/main/gen/me/mattco/serenityos/idl")
-        targetClass.set("IDLLexer.java")
-        purgeOldFiles.set(true)
-        skeleton
-    }
+    val supportedDSLs = listOf("IDL")
 
-    task<GenerateParserTask>("generateIDLParser") {
-        group = "grammarkit"
-        sourceFile.set(file("src/main/resources/grammar/SerenityOS IDL.bnf"))
-        targetRoot.set("src/main/gen")
-        pathToParser.set("me/mattco/serenityos/idl/IDLParser.java")
-        pathToPsiRoot.set("me/mattco/serenityos/psi")
-        purgeOldFiles.set(true)
+    for (dsl in supportedDSLs) {
+        task<GenerateLexerTask>("generate${dsl}Lexer") {
+            group = "grammarkit"
+            sourceFile.set(file("src/main/resources/grammar/SerenityOS ${dsl}.flex"))
+            targetDir.set("src/main/gen/me/mattco/serenityos/${dsl.lowercase()}")
+            targetClass.set("${dsl}Lexer.java")
+            purgeOldFiles.set(true)
+            skeleton
+        }
+
+        task<GenerateParserTask>("generate${dsl}Parser") {
+            group = "grammarkit"
+            sourceFile.set(file("src/main/resources/grammar/SerenityOS ${dsl}.bnf"))
+            targetRoot.set("src/main/gen")
+            pathToParser.set("me/mattco/serenityos/${dsl.lowercase()}/${dsl}Parser.java")
+            pathToPsiRoot.set("me/mattco/serenityos/${dsl.lowercase()}/psi")
+            purgeOldFiles.set(true)
+        }
     }
 
     task("generateAll") {
         group = "grammarkit"
-        dependsOn("generateIDLLexer", "generateIDLParser")
+        supportedDSLs.forEach { dependsOn("generate${it}Lexer", "generate${it}Parser") }
     }
 
     compileKotlin {
