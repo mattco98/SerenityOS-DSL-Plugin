@@ -1,0 +1,41 @@
+{
+    parserClass="me.mattco.serenityos.gml.GMLParser"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="GML"
+    psiImplClassSuffix="Impl"
+    psiPackage="me.mattco.serenityos.gml.psi.api"
+    psiImplPackage="me.mattco.serenityos.gml.psi.impl"
+
+    elementTypeHolderClass="me.mattco.serenityos.gml.GMLTypes"
+    elementTypeClass="me.mattco.serenityos.gml.GMLElementType"
+    tokenTypeClass="me.mattco.serenityos.gml.GMLToken"
+
+    tokens=[
+        COMMENT="regexp:(//[^\r\n]*)+"
+    ]
+
+    implements(".*")="me.mattco.serenityos.gml.psi.GMLPsiElement"
+    generateTokenAccessors=true
+}
+
+File ::= Component
+
+Component ::= ComponentName OPEN_CURLY ComponentBody CLOSE_CURLY {
+    mixin="me.mattco.serenityos.gml.psi.mixins.GMLComponentMixin"
+}
+ComponentName ::= AT NAMESPACE? IDENTIFIER (NAMESPACE IDENTIFIER)*
+ComponentBody ::= (Property | Component)*
+Property ::= PropertyIdentifier COLON Value
+PropertyIdentifier ::= IDENTIFIER
+Value ::=
+    Boolean
+  | NUMBER
+  | STRING
+  | Array
+  | Component
+
+Boolean ::= "true" | "false"
+
+Array ::= OPEN_BRACKET [Value (COMMA Value)*] CLOSE_BRACKET

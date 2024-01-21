@@ -3,6 +3,10 @@
 # Changelog
 
 ## Unreleased
+### Added
+- GML support
+  - Syntax highlighting
+  - Basic completion: navigate from a component to it's C++ definition
 
 ## 1.1.0 - 2024-01-21
 

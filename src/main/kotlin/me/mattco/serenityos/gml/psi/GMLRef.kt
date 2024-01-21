@@ -1,4 +1,4 @@
-package me.mattco.serenityos.ipc.psi
+package me.mattco.serenityos.gml.psi
 
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
@@ -6,14 +6,14 @@ import com.intellij.psi.PsiElementResolveResult
 import com.intellij.psi.PsiPolyVariantReferenceBase
 import com.intellij.psi.ResolveResult
 
-abstract class IPCRef<T : IPCNameIdentifierOwner>(element: T) : PsiPolyVariantReferenceBase<T>(element) {
+abstract class GMLRef<T : GMLNameIdentifierOwner>(element: T) : PsiPolyVariantReferenceBase<T>(element) {
     open fun multiResolve(): List<PsiElement> = listOfNotNull(singleResolve())
 
     open fun singleResolve(): PsiElement? =
         error("No implementation of singleResolve() for ref ${this::class.simpleName}")
 
     final override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
-        return (element.reference as IPCRef<*>).multiResolve().map(::PsiElementResolveResult).toTypedArray()
+        return (element.reference as GMLRef<*>).multiResolve().map(::PsiElementResolveResult).toTypedArray()
     }
 
     final override fun calculateDefaultRangeInElement(): TextRange {
@@ -24,7 +24,7 @@ abstract class IPCRef<T : IPCNameIdentifierOwner>(element: T) : PsiPolyVariantRe
 
     override fun handleElementRename(newElementName: String): PsiElement {
         element.nameIdentifier?.let {
-            it.replace(IPCPsiFactory(it.project).createIdentifier(newElementName))
+            it.replace(GMLPsiFactory(it.project).createIdentifier(newElementName))
             return it
         }
 
@@ -32,14 +32,12 @@ abstract class IPCRef<T : IPCNameIdentifierOwner>(element: T) : PsiPolyVariantRe
     }
 }
 
-inline fun <T : IPCNameIdentifierOwner> T.singleRef(crossinline producer: (T) -> PsiElement?) =
-    object : IPCRef<T>(this) {
+inline fun <T : GMLNameIdentifierOwner> T.singleRef(crossinline producer: (T) -> PsiElement?) =
+    object : GMLRef<T>(this) {
         override fun singleResolve() = producer(element)
     }
 
-inline fun <T : IPCNameIdentifierOwner> T.multiRef(crossinline producer: (T) -> List<PsiElement>) =
-    object : IPCRef<T>(this) {
+inline fun <T : GMLNameIdentifierOwner> T.multiRef(crossinline producer: (T) -> List<PsiElement>) =
+    object : GMLRef<T>(this) {
         override fun multiResolve() = producer(element)
     }
-
-fun <T : IPCNameIdentifierOwner> T.multiResolve() = (reference as? IPCRef<*>)?.multiResolve()

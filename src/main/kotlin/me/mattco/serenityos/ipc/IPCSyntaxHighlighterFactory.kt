@@ -28,7 +28,7 @@ object Highlights {
     val ANGLE_BRACKETS = OPERATOR.extend("ANGLE_BRACKETS")
 
     val PRIMITIVE_TYPE = KEYWORD.extend("PRIMITIVE_TYPE")
-    val CLASS_TYPE = Default.CLASS_NAME.extend("PLATFORM_TYPE")
+    val CLASS_TYPE = Default.CLASS_NAME.extend("CLASS_TYPE")
 
     val ATTRIBUTE_NAME = Default.INSTANCE_FIELD.extend("ATTRIBUTE_NAME")
     val ENDPOINT_NAME = Default.CLASS_NAME.extend("ENDPOINT_NAME")

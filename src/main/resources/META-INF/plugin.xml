@@ -16,6 +16,40 @@
     ]]></description>
 
     <extensions defaultExtensionNs="com.intellij">
+        <!-- GML  -->
+        <fileType
+                name="SerenityOS GML"
+                implementationClass="me.mattco.serenityos.gml.GMLFileType"
+                fieldName="INSTANCE"
+                language="SerenityOS GML"
+                extensions="gml"
+        />
+        <lang.parserDefinition
+                language="SerenityOS GML"
+                implementationClass="me.mattco.serenityos.gml.GMLParserDefinition"
+        />
+        <lang.syntaxHighlighterFactory
+                language="SerenityOS GML"
+                implementationClass="me.mattco.serenityos.gml.GMLSyntaxHighlighterFactory"
+        />
+        <lang.commenter
+                language="SerenityOS GML"
+                implementationClass="me.mattco.serenityos.gml.GMLCommenter"
+        />
+        <lang.foldingBuilder
+                language="SerenityOS IDL"
+                implementationClass="me.mattco.serenityos.gml.GMLBlockFoldingBuilder"
+        />
+        <annotator
+                language="SerenityOS GML"
+                implementationClass="me.mattco.serenityos.gml.GMLSyntaxAnnotator"
+        />
+        <codeInsight.lineMarkerProvider
+                language="SerenityOS GML"
+                implementationClass="me.mattco.serenityos.gml.GMLLineMarkerProvider"
+        />
+        <colorSettingsPage implementation="me.mattco.serenityos.gml.GMLColorSettingsPage" />
+
         <!-- IDL  -->
         <fileType
                 name="SerenityOS IDL"

@@ -20,6 +20,7 @@ import com.jetbrains.cidr.lang.search.OCSearchHelper
 import com.jetbrains.cidr.lang.search.OCSearchUtil
 import com.jetbrains.cidr.lang.search.scopes.OCSearchScopeService
 import com.jetbrains.cidr.lang.symbols.OCSymbolContext
+import me.mattco.serenityos.idl.psi.IDLRef
 import me.mattco.serenityos.ipc.project.ipcProject
 import me.mattco.serenityos.ipc.psi.api.IPCEndpoint
 
