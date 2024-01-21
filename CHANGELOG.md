@@ -1,7 +1,14 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# serenityos-intellij-plugin Changelog
+# Changelog
 
-## [Unreleased]
+## Unreleased
 ### Added
-- Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+
+- Support for IPC files
+  - Full syntax highlighting
+  - "#include" path resolution
+  - Line markers on endpoint that lead to any implementers
+    - The implementers also get line markers that lead back to the IPC endpoint
+  - Resolution of C++ types
+- Added IDL -> C++ line markers
