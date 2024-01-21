@@ -3,6 +3,9 @@
 # Changelog
 
 ## Unreleased
+
+## 1.1.0 - 2024-01-21
+
 ### Added
 
 - Support for IPC files
