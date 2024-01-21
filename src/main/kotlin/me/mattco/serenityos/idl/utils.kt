@@ -9,8 +9,8 @@ import com.intellij.psi.util.elementType
 fun PsiElement.prevSiblings() = generateSequence(this.prevSibling) { it.prevSibling }.filter { it !is PsiWhiteSpace }
 fun PsiElement.nextSiblings() = generateSequence(this.nextSibling) { it.nextSibling }.filter { it !is PsiWhiteSpace }
 
-inline fun <reified T> PsiElement.prevSiblingOfType() = prevSiblings().find { it is T } as T?
-inline fun <reified T> PsiElement.nextSiblingOfType() = nextSiblings().find { it is T } as T
+inline fun <reified T> PsiElement.prevSiblingOfType() = prevSiblings().find { it is T } as? T?
+inline fun <reified T> PsiElement.nextSiblingOfType() = nextSiblings().find { it is T } as? T
 
 inline fun <reified T> PsiElement.prevSiblingsOfType() = prevSiblings().filterIsInstance<T>()
 inline fun <reified T> PsiElement.nextSiblingsOfType() = nextSiblings().filterIsInstance<T>()
