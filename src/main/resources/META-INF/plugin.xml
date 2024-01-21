@@ -102,6 +102,18 @@
                 language="SerenityOS IPC"
                 implementationClass="me.mattco.serenityos.ipc.IPCSyntaxAnnotator"
         />
+        <codeInsight.lineMarkerProvider
+                language="SerenityOS IPC"
+                implementationClass="me.mattco.serenityos.ipc.IPCLineMarkerProvider"
+        />
+        <codeInsight.lineMarkerProvider
+                language="ObjectiveC"
+                implementationClass="me.mattco.serenityos.ipc.IPCLineMarkerProvider"
+        />
+        <codeInsight.lineMarkerProvider
+                language="ObjectiveC++"
+                implementationClass="me.mattco.serenityos.ipc.IPCLineMarkerProvider"
+        />
         <colorSettingsPage implementation="me.mattco.serenityos.ipc.IPCColorSettingsPage" />
         <projectService
                 serviceInterface="me.mattco.serenityos.ipc.project.IPCProjectService"

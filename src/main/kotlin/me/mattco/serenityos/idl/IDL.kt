@@ -7,7 +7,7 @@ import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.FileViewProvider
 
 object IDLLanguage : Language("SerenityOS IDL") {
-    val FILE_ICON = IconLoader.getIcon("/META-INF/pluginIcon.svg", IDLLanguage::class.java)
+    val FILE_ICON = IconLoader.getIcon("/META-INF/idl.svg", IDLLanguage::class.java)
 }
 
 object IDLFileType : LanguageFileType(IDLLanguage) {

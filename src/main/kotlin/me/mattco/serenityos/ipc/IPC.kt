@@ -2,14 +2,12 @@ package me.mattco.serenityos.ipc
 
 import com.intellij.extapi.psi.PsiFileBase
 import com.intellij.lang.Language
-import com.intellij.openapi.fileTypes.FileType
 import com.intellij.openapi.fileTypes.LanguageFileType
 import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.FileViewProvider
 
 object IPCLanguage : Language("SerenityOS IPC") {
-    // TODO: Get an icon for this
-    val FILE_ICON = IconLoader.getIcon("/META-INF/pluginIcon.svg", IPCLanguage::class.java)
+    val FILE_ICON = IconLoader.getIcon("/META-INF/ipc.png", IPCLanguage::class.java)
 }
 
 object IPCFileType : LanguageFileType(IPCLanguage) {
