@@ -5,7 +5,7 @@ import com.intellij.psi.PsiComment
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiWhiteSpace
 import me.mattco.serenityos.common.DSLAnnotator
-import me.mattco.serenityos.idl.*
+import me.mattco.serenityos.common.prevSiblings
 import me.mattco.serenityos.idl.psi.IDLDeclaration
 import me.mattco.serenityos.idl.psi.api.IDLCallbackInterface
 import me.mattco.serenityos.idl.psi.api.IDLExtendedAttributeList

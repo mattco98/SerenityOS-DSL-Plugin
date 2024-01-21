@@ -4,7 +4,6 @@ import com.intellij.openapi.project.DumbService
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.toNioPathOrNull
-import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScopes
@@ -15,7 +14,7 @@ import com.jetbrains.cidr.lang.psi.OCCppNamespace
 import com.jetbrains.cidr.lang.psi.OCElement
 import com.jetbrains.cidr.lang.psi.OCFile
 import com.jetbrains.cidr.lang.psi.OCStructLike
-import me.mattco.serenityos.idl.descendentsOfType
+import me.mattco.serenityos.common.descendentsOfType
 import me.mattco.serenityos.idl.IDLFile
 import me.mattco.serenityos.idl.IDLResolver
 import me.mattco.serenityos.idl.psi.IDLDeclaration

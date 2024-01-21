@@ -1,4 +1,4 @@
-package me.mattco.serenityos.idl
+package me.mattco.serenityos.common
 
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiWhiteSpace

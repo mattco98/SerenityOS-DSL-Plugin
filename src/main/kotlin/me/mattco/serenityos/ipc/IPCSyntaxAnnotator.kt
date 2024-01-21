@@ -3,11 +3,10 @@ package me.mattco.serenityos.ipc
 import com.intellij.openapi.project.DumbAware
 import com.intellij.psi.PsiElement
 import me.mattco.serenityos.common.DSLAnnotator
-import me.mattco.serenityos.idl.findChildrenOfType
+import me.mattco.serenityos.common.findChildrenOfType
 import me.mattco.serenityos.ipc.psi.api.IPCAttributeList
 import me.mattco.serenityos.ipc.psi.api.IPCEndpoint
 import me.mattco.serenityos.ipc.psi.api.IPCEndpointFunction
-import me.mattco.serenityos.ipc.psi.api.IPCInclude
 import me.mattco.serenityos.ipc.psi.api.IPCIncludePath
 import me.mattco.serenityos.ipc.psi.api.IPCType
 

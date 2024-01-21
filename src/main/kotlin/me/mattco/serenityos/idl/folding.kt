@@ -9,6 +9,8 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
+import me.mattco.serenityos.common.nextSiblingOfType
+import me.mattco.serenityos.common.prevSiblingOfType
 import me.mattco.serenityos.idl.psi.IDLPsiElement
 import me.mattco.serenityos.idl.psi.api.*
 

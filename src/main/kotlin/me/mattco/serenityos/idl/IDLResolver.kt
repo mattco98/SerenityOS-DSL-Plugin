@@ -2,6 +2,7 @@ package me.mattco.serenityos.idl
 
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.descendantsOfType
+import me.mattco.serenityos.common.findChildrenOfType
 import me.mattco.serenityos.idl.psi.IDLDeclaration
 import me.mattco.serenityos.idl.psi.api.IDLImportStatement
 import me.mattco.serenityos.idl.psi.mixins.resolveFile

@@ -9,7 +9,7 @@ import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScopes
 import com.jetbrains.cidr.lang.psi.OCFile
 import com.jetbrains.cidr.lang.psi.OCStructLike
-import me.mattco.serenityos.idl.findChildOfType
+import me.mattco.serenityos.common.findChildOfType
 import me.mattco.serenityos.ipc.IPCFile
 import me.mattco.serenityos.ipc.IPCFileType
 import me.mattco.serenityos.ipc.psi.api.IPCEndpoint

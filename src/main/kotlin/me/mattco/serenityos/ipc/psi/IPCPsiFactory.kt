@@ -3,7 +3,7 @@ package me.mattco.serenityos.ipc.psi
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFileFactory
-import me.mattco.serenityos.idl.descendantOfType
+import me.mattco.serenityos.common.descendantOfType
 import me.mattco.serenityos.ipc.IPCFile
 import me.mattco.serenityos.ipc.IPCFileType
 import me.mattco.serenityos.ipc.psi.api.IPCEndpoint

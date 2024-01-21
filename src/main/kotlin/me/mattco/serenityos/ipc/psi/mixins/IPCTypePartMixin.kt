@@ -9,8 +9,7 @@ import com.jetbrains.cidr.lang.psi.OCCppNamespace
 import com.jetbrains.cidr.lang.psi.OCElement
 import com.jetbrains.cidr.lang.psi.OCStructLike
 import com.jetbrains.cidr.lang.symbols.OCResolveContext
-import me.mattco.serenityos.idl.findChildrenOfType
-import me.mattco.serenityos.idl.prevSiblingsOfType
+import me.mattco.serenityos.common.findChildrenOfType
 import me.mattco.serenityos.ipc.IPCFile
 import me.mattco.serenityos.ipc.psi.IPCNamedElement
 import me.mattco.serenityos.ipc.psi.api.IPCInclude
