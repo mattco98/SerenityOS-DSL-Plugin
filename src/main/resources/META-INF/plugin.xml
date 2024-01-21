@@ -34,7 +34,7 @@
         />
         <lang.commenter
                 language="SerenityOS GML"
-                implementationClass="me.mattco.serenityos.gml.GMLCommenter"
+                implementationClass="me.mattco.serenityos.common.DSLCommenter"
         />
         <lang.foldingBuilder
                 language="SerenityOS IDL"
@@ -76,7 +76,7 @@
         />
         <lang.commenter
                 language="SerenityOS IDL"
-                implementationClass="me.mattco.serenityos.idl.IDLCommenter"
+                implementationClass="me.mattco.serenityos.common.DSLCommenter"
         />
         <lang.findUsagesProvider
                 language="SerenityOS IDL"
@@ -130,7 +130,7 @@
         />
         <lang.commenter
                 language="SerenityOS IPC"
-                implementationClass="me.mattco.serenityos.ipc.IPCCommenter"
+                implementationClass="me.mattco.serenityos.common.DSLCommenter"
         />
         <annotator
                 language="SerenityOS IPC"

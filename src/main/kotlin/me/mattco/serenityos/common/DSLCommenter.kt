@@ -1,8 +1,8 @@
-package me.mattco.serenityos.idl
+package me.mattco.serenityos.common
 
 import com.intellij.lang.Commenter
 
-class IDLCommenter : Commenter {
+class DSLCommenter : Commenter {
     override fun getLineCommentPrefix() = "// "
 
     override fun getBlockCommentPrefix() = null
