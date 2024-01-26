@@ -1,6 +1,5 @@
 package me.mattco.serenityos.gml
 
-import com.intellij.openapi.editor.colors.TextAttributesKey
 import me.mattco.serenityos.common.DSLColorSettingsPage
 import me.mattco.serenityos.ipc.IPCSyntaxHighlighter
 

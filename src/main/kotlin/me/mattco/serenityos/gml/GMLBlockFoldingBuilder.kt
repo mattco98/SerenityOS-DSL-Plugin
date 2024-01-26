@@ -6,13 +6,11 @@ import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
-import com.intellij.psi.search.PsiElementProcessor
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
 import me.mattco.serenityos.gml.psi.GMLPsiElement
 import me.mattco.serenityos.gml.psi.api.GMLComponent
-import me.mattco.serenityos.gml.psi.api.GMLComponentBody
 import me.mattco.serenityos.gml.psi.api.GMLVisitor
 
 class GMLBlockFoldingBuilder : CustomFoldingBuilder() {

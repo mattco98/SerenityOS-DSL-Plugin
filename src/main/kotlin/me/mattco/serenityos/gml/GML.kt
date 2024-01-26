@@ -1,7 +1,6 @@
 package me.mattco.serenityos.gml
 
 import com.intellij.extapi.psi.PsiFileBase
-import com.intellij.icons.AllIcons
 import com.intellij.lang.Language
 import com.intellij.openapi.fileTypes.LanguageFileType
 import com.intellij.openapi.util.IconLoader

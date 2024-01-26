@@ -4,6 +4,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
 import com.intellij.openapi.project.Project
 import com.intellij.psi.FileViewProvider
+import com.intellij.psi.PsiElement
 import com.intellij.psi.tree.TokenSet
 
 class IPCParserDefinition : ParserDefinition {
@@ -12,7 +13,7 @@ class IPCParserDefinition : ParserDefinition {
 
     override fun getFileNodeType() = IPCFileStub.Type
 
-    override fun createElement(node: ASTNode?) = IPCTypes.Factory.createElement(node)
+    override fun createElement(node: ASTNode?): PsiElement = IPCTypes.Factory.createElement(node)
     override fun createFile(viewProvider: FileViewProvider) = IPCFile(viewProvider)
 
     override fun getWhitespaceTokens() = WHITE_SPACES

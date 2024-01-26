@@ -1,8 +1,5 @@
 package me.mattco.serenityos.idl
 
-import com.intellij.openapi.options.colors.AttributesDescriptor
-import com.intellij.openapi.options.colors.ColorDescriptor
-import com.intellij.openapi.options.colors.ColorSettingsPage
 import me.mattco.serenityos.common.DSLColorSettingsPage
 
 class IDLColorSettingsPage : DSLColorSettingsPage(IDLLanguage) {

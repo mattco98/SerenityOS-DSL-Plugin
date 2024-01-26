@@ -309,7 +309,7 @@ DictionaryMember ::= ExtendedAttributeList? (RequiredDictionaryMember | Optional
 
 RequiredDictionaryMember ::= KEYWORD_REQUIRED TypeWithExtendedAttributes IDENTIFIER SEMICOLON
 
-OptionalDictionaryMember ::= Type IDENTIFIEr Default SEMICOLON
+OptionalDictionaryMember ::= Type IDENTIFIER Default SEMICOLON
 
 PartialDictionary ::= KEYWORD_DICTIONARY Ident OPEN_CURLY DictionaryMembers CLOSE_CURLY SEMICOLON
 

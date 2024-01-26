@@ -7,8 +7,6 @@ import com.intellij.psi.PsiManager
 import com.intellij.psi.PsiTreeChangeEvent
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScopes
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import me.mattco.serenityos.common.DSLTreeChangeListener
 import me.mattco.serenityos.common.isSerenity

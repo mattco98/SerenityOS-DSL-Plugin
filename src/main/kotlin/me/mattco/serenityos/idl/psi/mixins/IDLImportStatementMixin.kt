@@ -4,7 +4,6 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiReference
 import me.mattco.serenityos.idl.IDLFile
 import me.mattco.serenityos.idl.project.idlProject
-import me.mattco.serenityos.idl.psi.IDLNameIdentifierOwner
 import me.mattco.serenityos.idl.psi.IDLNamedElement
 import me.mattco.serenityos.idl.psi.api.IDLImportStatement
 import me.mattco.serenityos.idl.psi.singleRef

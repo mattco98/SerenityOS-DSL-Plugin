@@ -4,6 +4,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
 import com.intellij.openapi.project.Project
 import com.intellij.psi.FileViewProvider
+import com.intellij.psi.PsiElement
 import com.intellij.psi.tree.TokenSet
 
 class IDLParserDefinition : ParserDefinition {
@@ -12,7 +13,7 @@ class IDLParserDefinition : ParserDefinition {
 
     override fun getFileNodeType() = IDLFileStub.Type
 
-    override fun createElement(node: ASTNode?) = IDLTypes.Factory.createElement(node)
+    override fun createElement(node: ASTNode?): PsiElement = IDLTypes.Factory.createElement(node)
     override fun createFile(viewProvider: FileViewProvider) = IDLFile(viewProvider)
 
     override fun getWhitespaceTokens() = WHITE_SPACES

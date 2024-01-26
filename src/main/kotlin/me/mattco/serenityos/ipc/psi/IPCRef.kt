@@ -41,5 +41,3 @@ inline fun <T : IPCNameIdentifierOwner> T.multiRef(crossinline producer: (T) -> 
     object : IPCRef<T>(this) {
         override fun multiResolve() = producer(element)
     }
-
-fun <T : IPCNameIdentifierOwner> T.multiResolve() = (reference as? IPCRef<*>)?.multiResolve()

@@ -4,7 +4,6 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiElement
-import com.jetbrains.cidr.lang.psi.OCDeclaration
 import com.jetbrains.cidr.lang.psi.OCStructLike
 import me.mattco.serenityos.idl.IDLFile
 import me.mattco.serenityos.idl.psi.IDLDeclaration

@@ -3,33 +3,11 @@ package me.mattco.serenityos.gml.formatting
 import com.intellij.formatting.Alignment
 import com.intellij.formatting.Indent
 import com.intellij.lang.ASTNode
-import com.intellij.psi.TokenType
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings
 import me.mattco.serenityos.common.formatting.SpacingBuilder
 import me.mattco.serenityos.common.formatting.elementType
-import me.mattco.serenityos.common.formatting.tokenSetOf
 import me.mattco.serenityos.gml.GMLFileStub
 import me.mattco.serenityos.gml.GMLTypes.*
-
-val DELIMITERS = tokenSetOf(OPEN_CURLY, CLOSE_CURLY, OPEN_BRACKET, CLOSE_BRACKET)
-
-fun ASTNode.treePrevs() = generateSequence(treePrev, ASTNode::getTreePrev)
-
-fun ASTNode.isDelimiterFor(node: ASTNode): Boolean {
-    return elementType in DELIMITERS && treeParent == node
-}
-
-fun ASTNode.afterNewline(): Boolean {
-    for (prev in treePrevs()) {
-        if (prev.elementType == TokenType.WHITE_SPACE && '\n' in prev.text)
-            return true
-
-        if (prev.elementType != TokenType.WHITE_SPACE)
-            return false
-    }
-
-    return false
-}
 
 fun buildGMLSpacingRules(settings: CommonCodeStyleSettings) = SpacingBuilder(settings).apply {
     simple {

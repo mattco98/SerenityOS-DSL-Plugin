@@ -36,8 +36,3 @@ inline fun <T : IDLNameIdentifierOwner> T.singleRef(crossinline producer: (T) ->
     object : IDLRef<T>(this) {
         override fun singleResolve() = producer(element)
     }
-
-inline fun <T : IDLNameIdentifierOwner> T.multiRef(crossinline producer: (T) -> List<PsiElement>) =
-    object : IDLRef<T>(this) {
-        override fun multiResolve() = producer(element)
-    }

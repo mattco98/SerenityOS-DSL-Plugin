@@ -15,7 +15,7 @@ abstract class DSLAnnotator : Annotator {
     protected abstract fun annotate(element: PsiElement, holder: Holder)
 
     data class Holder(private val holder: AnnotationHolder) {
-        fun newAnnotation(severity: HighlightSeverity, message: String? = null) = if (message == null) {
+        private fun newAnnotation(severity: HighlightSeverity, message: String? = null) = if (message == null) {
             holder.newSilentAnnotation(severity)
         } else holder.newAnnotation(severity, message)
 

@@ -15,7 +15,6 @@ interface Builder {
 // Heavily inspired by the Kotlin plugin's SpacingBuilder system
 class SpacingBuilder(private val settings: CommonCodeStyleSettings) : Builder {
     private val builders = mutableListOf<Builder>()
-    val NO_SPACING = Spacing.createSpacing(0, 0, 0, false, 0)
 
     fun simple(block: SpacingBuilder.() -> Unit) {
         builders.add(SimpleBuilder(settings).apply(block))
@@ -51,7 +50,7 @@ class SpacingBuilder(private val settings: CommonCodeStyleSettings) : Builder {
         minLineFeeds: Int = 0,
         keepLineBreaks: Boolean = true,
         keepBlankLines: Int = 1,
-    ) = Spacing.createSpacing(minSpaces, maxSpaces, minLineFeeds, keepLineBreaks, keepBlankLines)
+    ): Spacing = Spacing.createSpacing(minSpaces, maxSpaces, minLineFeeds, keepLineBreaks, keepBlankLines)
 
     class SimpleBuilder(settings: CommonCodeStyleSettings) : SpacingBuilder(settings), Builder {
         override fun getSpacing(parent: ASTBlock?, left: ASTBlock?, right: ASTBlock?): Spacing? {

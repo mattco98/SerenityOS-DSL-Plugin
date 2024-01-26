@@ -1,13 +1,7 @@
 package me.mattco.serenityos.gml
 
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class Component(
@@ -69,7 +63,7 @@ sealed interface Type {
         override fun presentation() = "Margins"
     }
 
-    class Array(val min: kotlin.Int, val max: kotlin.Int, val inner: Type) : Type {
+    class Array(private val min: kotlin.Int, private val max: kotlin.Int, private val inner: Type) : Type {
         override fun presentation(): kotlin.String = buildString {
             append(inner.presentation().let {
                 if (inner is Variant) "($it)" else it

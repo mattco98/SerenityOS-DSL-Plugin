@@ -4,23 +4,14 @@ import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
 import com.intellij.icons.AllIcons
-import com.intellij.openapi.progress.ProgressManager
-import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScopes
 import com.intellij.psi.util.PsiTreeUtil
 import com.jetbrains.cidr.lang.OCFileType
-import com.jetbrains.cidr.lang.OCIcons
 import com.jetbrains.cidr.lang.psi.OCFile
 import com.jetbrains.cidr.lang.psi.OCStructLike
-import com.jetbrains.cidr.lang.search.OCSearchEverywhereClassifier
-import com.jetbrains.cidr.lang.search.OCSearchHelper
-import com.jetbrains.cidr.lang.search.OCSearchUtil
-import com.jetbrains.cidr.lang.search.scopes.OCSearchScopeService
-import com.jetbrains.cidr.lang.symbols.OCSymbolContext
-import me.mattco.serenityos.idl.psi.IDLRef
 import me.mattco.serenityos.ipc.project.ipcProject
 import me.mattco.serenityos.ipc.psi.api.IPCEndpoint
 

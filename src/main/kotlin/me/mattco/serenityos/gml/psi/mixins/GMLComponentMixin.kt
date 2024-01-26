@@ -13,7 +13,6 @@ import me.mattco.serenityos.common.findChildrenOfType
 import me.mattco.serenityos.gml.Component
 import me.mattco.serenityos.gml.GMLService
 import me.mattco.serenityos.gml.GMLTypes
-import me.mattco.serenityos.gml.Property
 import me.mattco.serenityos.gml.psi.GMLNamedElement
 import me.mattco.serenityos.gml.psi.api.GMLComponent
 import me.mattco.serenityos.gml.psi.singleRef

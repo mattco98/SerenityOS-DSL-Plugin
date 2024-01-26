@@ -9,7 +9,7 @@ import me.mattco.serenityos.ipc.IPCFileType
 import me.mattco.serenityos.ipc.psi.api.IPCEndpoint
 
 class IPCPsiFactory(private val project: Project) {
-    fun createFile(text: String, fileName: String = "dummy.ipc") = PsiFileFactory
+    private fun createFile(text: String, fileName: String = "dummy.ipc") = PsiFileFactory
         .getInstance(project)
         .createFileFromText(
             fileName,
@@ -20,5 +20,5 @@ class IPCPsiFactory(private val project: Project) {
     fun createIdentifier(name: String) = createFromText<IPCEndpoint>("endpoint $name {}")?.identifier
         ?: error("Failed to create endpoint")
 
-    inline fun <reified T : PsiElement> createFromText(text: String): T? = createFile(text).descendantOfType()
+    private inline fun <reified T : PsiElement> createFromText(text: String): T? = createFile(text).descendantOfType()
 }

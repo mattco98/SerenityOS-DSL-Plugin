@@ -9,7 +9,7 @@ import me.mattco.serenityos.idl.IDLFileType
 import me.mattco.serenityos.idl.psi.api.IDLNamespace
 
 class IDLPsiFactory(private val project: Project) {
-    fun createFile(text: String, fileName: String = "dummy.idl") = PsiFileFactory
+    private fun createFile(text: String, fileName: String = "dummy.idl") = PsiFileFactory
         .getInstance(project)
         .createFileFromText(
             fileName,
@@ -20,5 +20,5 @@ class IDLPsiFactory(private val project: Project) {
     fun createIdentifier(name: String) = createFromText<IDLNamespace>("namespace $name {}")?.identifier
         ?: error("Failed to create namespace")
 
-    inline fun <reified T : PsiElement> createFromText(text: String): T? = createFile(text).descendantOfType()
+    private inline fun <reified T : PsiElement> createFromText(text: String): T? = createFile(text).descendantOfType()
 }

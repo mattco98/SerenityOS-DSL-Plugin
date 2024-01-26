@@ -6,9 +6,9 @@ import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.components.service
 import com.intellij.patterns.ElementPattern
-import com.intellij.patterns.PlatformPatterns
 import com.intellij.psi.PsiElement
 import com.intellij.util.ProcessingContext
+import me.mattco.serenityos.common.PsiPattern
 import me.mattco.serenityos.common.ancestorOfType
 import me.mattco.serenityos.common.psiElement
 import me.mattco.serenityos.gml.GMLService
@@ -18,7 +18,7 @@ import me.mattco.serenityos.gml.psi.api.GMLComponent
 import me.mattco.serenityos.gml.psi.api.GMLPropertyIdentifier
 
 object GMLPropertyCompletion : GMLCompletion() {
-    override val pattern: ElementPattern<out PsiElement>
+    override val pattern: PsiPattern
         get() = psiElement(GMLTypes.IDENTIFIER).withParent(psiElement<GMLPropertyIdentifier>())
 
     override fun addCompletions(

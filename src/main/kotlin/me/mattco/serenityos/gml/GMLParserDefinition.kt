@@ -4,6 +4,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
 import com.intellij.openapi.project.Project
 import com.intellij.psi.FileViewProvider
+import com.intellij.psi.PsiElement
 import com.intellij.psi.tree.TokenSet
 
 class GMLParserDefinition : ParserDefinition {
@@ -12,7 +13,7 @@ class GMLParserDefinition : ParserDefinition {
 
     override fun getFileNodeType() = GMLFileStub.Type
 
-    override fun createElement(node: ASTNode?) = GMLTypes.Factory.createElement(node)
+    override fun createElement(node: ASTNode?): PsiElement = GMLTypes.Factory.createElement(node)
     override fun createFile(viewProvider: FileViewProvider) = GMLFile(viewProvider)
 
     override fun getWhitespaceTokens() = WHITE_SPACES

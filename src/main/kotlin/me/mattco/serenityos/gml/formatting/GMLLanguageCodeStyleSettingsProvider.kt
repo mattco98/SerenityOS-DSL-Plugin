@@ -6,7 +6,7 @@ import me.mattco.serenityos.gml.GMLLanguage
 class GMLLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvider() {
     override fun getLanguage() = GMLLanguage
 
-    override fun getCodeSample(settingsType: SettingsType): String? {
+    override fun getCodeSample(settingsType: SettingsType): String {
         return "TODO: Add code sample here"
     }
 }

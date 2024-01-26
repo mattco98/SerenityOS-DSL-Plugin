@@ -28,7 +28,7 @@ abstract class DSLColorSettingsPage(private val language: Language) : ColorSetti
 
     override fun getColorDescriptors(): Array<ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY
 
-    override fun getDisplayName() = IPCLanguage.displayName
+    override fun getDisplayName() = language.displayName
 
     override fun getAttributeDescriptors() =
         getAttributes().map { AttributesDescriptor(it.key, it.value) }.toTypedArray()

@@ -6,7 +6,6 @@ import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder
 import com.intellij.icons.AllIcons
 import com.intellij.psi.PsiElement
 import com.jetbrains.cidr.lang.psi.OCStructLike
-import me.mattco.serenityos.common.findChildOfType
 import me.mattco.serenityos.common.findChildrenOfType
 import me.mattco.serenityos.gml.psi.api.GMLComponent
 

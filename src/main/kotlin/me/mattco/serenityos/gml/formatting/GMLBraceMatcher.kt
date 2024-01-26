@@ -4,8 +4,6 @@ import com.intellij.lang.BracePair
 import com.intellij.lang.PairedBraceMatcher
 import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IElementType
-import me.mattco.serenityos.gml.GMLFileStub
-import me.mattco.serenityos.gml.GMLLexerAdapter
 import me.mattco.serenityos.gml.GMLLexerBase
 import me.mattco.serenityos.gml.GMLTypes
 

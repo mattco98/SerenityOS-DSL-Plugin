@@ -36,8 +36,3 @@ inline fun <T : GMLNameIdentifierOwner> T.singleRef(crossinline producer: (T) ->
     object : GMLRef<T>(this) {
         override fun singleResolve() = producer(element)
     }
-
-inline fun <T : GMLNameIdentifierOwner> T.multiRef(crossinline producer: (T) -> List<PsiElement>) =
-    object : GMLRef<T>(this) {
-        override fun multiResolve() = producer(element)
-    }
