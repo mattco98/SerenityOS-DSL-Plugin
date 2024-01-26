@@ -22,7 +22,7 @@
 
 File ::= Component
 
-Component ::= ComponentName OPEN_CURLY ComponentBody CLOSE_CURLY {
+Component ::= ComponentName OPEN_CURLY ComponentBody? CLOSE_CURLY {
     implements="me.mattco.serenityos.gml.psi.interfaces.IGMLComponent"
     mixin="me.mattco.serenityos.gml.psi.mixins.GMLComponentMixin"
     pin=1
@@ -36,7 +36,7 @@ ComponentName ::= AT NAMESPACE? IDENTIFIER (NAMESPACE IDENTIFIER)* {
     pin=1
 }
 
-ComponentBody ::= (Property | Component)*
+ComponentBody ::= (Property | Component)+
 Property ::= PropertyIdentifier COLON Value {
     implements="me.mattco.serenityos.gml.psi.interfaces.IGMLProperty"
     mixin="me.mattco.serenityos.gml.psi.mixins.GMLPropertyMixin"

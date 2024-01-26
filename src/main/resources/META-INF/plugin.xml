@@ -37,8 +37,22 @@
                 implementationClass="me.mattco.serenityos.common.DSLCommenter"
         />
         <lang.foldingBuilder
-                language="SerenityOS IDL"
+                language="SerenityOS GML"
                 implementationClass="me.mattco.serenityos.gml.GMLBlockFoldingBuilder"
+        />
+        <lang.formatter
+                language="SerenityOS GML"
+                implementationClass="me.mattco.serenityos.gml.formatting.GMLFormattingModelBuilder"
+        />
+        <lang.braceMatcher
+                language="SerenityOS GML"
+                implementationClass="me.mattco.serenityos.gml.formatting.GMLBraceMatcher"
+        />
+        <codeStyleSettingsProvider
+                implementation="me.mattco.serenityos.gml.formatting.GMLCodeStyleSettingsProvider"
+        />
+        <langCodeStyleSettingsProvider
+                implementation="me.mattco.serenityos.gml.formatting.GMLLanguageCodeStyleSettingsProvider"
         />
         <annotator
                 language="SerenityOS GML"

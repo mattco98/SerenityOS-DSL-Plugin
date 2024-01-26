@@ -10,6 +10,7 @@ import com.intellij.psi.search.PsiElementProcessor
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
+import me.mattco.serenityos.gml.psi.GMLPsiElement
 import me.mattco.serenityos.gml.psi.api.GMLComponent
 import me.mattco.serenityos.gml.psi.api.GMLComponentBody
 import me.mattco.serenityos.gml.psi.api.GMLVisitor
@@ -33,6 +34,9 @@ class GMLBlockFoldingBuilder : CustomFoldingBuilder() {
     override fun isRegionCollapsedByDefault(p0: ASTNode) = false
 
     private class FoldingVisitor(private val descriptors: MutableList<FoldingDescriptor>) : GMLVisitor() {
+        override fun visitPsiElement(o: GMLPsiElement) {
+        }
+
         override fun visitComponent(o: GMLComponent) {
             super.visitComponent(o)
             val start = o.openCurly?.startOffset ?: return
