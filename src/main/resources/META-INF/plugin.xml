@@ -49,6 +49,15 @@
                 implementationClass="me.mattco.serenityos.gml.GMLLineMarkerProvider"
         />
         <colorSettingsPage implementation="me.mattco.serenityos.gml.GMLColorSettingsPage" />
+        <projectService
+                serviceInterface="me.mattco.serenityos.gml.GMLService"
+                serviceImplementation="me.mattco.serenityos.gml.GMLServiceImpl"
+                configurationSchemaKey="serenityGML"
+        />
+        <postStartupActivity
+                language="SerenityOS GML"
+                implementationClass="me.mattco.serenityos.gml.GMLStartupActivity"
+        />
 
         <!-- IDL  -->
         <fileType

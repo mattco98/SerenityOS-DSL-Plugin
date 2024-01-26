@@ -10,6 +10,7 @@ fun environment(key: String) = providers.environmentVariable(key)
 plugins {
     idea
     alias(libs.plugins.kotlin)
+    alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.grammarkit)
     alias(libs.plugins.gradleIntelliJPlugin)
     alias(libs.plugins.changelog)
@@ -23,6 +24,9 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation(libs.kotlinSerialization)
 }
 
 intellij {
@@ -30,14 +34,6 @@ intellij {
     version = properties("platformVersion")
     type = properties("platformType")
     plugins = properties("platformPlugins").map { it.split(',').map(String::trim).filter(String::isNotEmpty) }
-}
-
-kotlin {
-    @Suppress("UnstableApiUsage")
-    jvmToolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-        vendor = JvmVendorSpec.JETBRAINS
-    }
 }
 
 changelog {
@@ -103,6 +99,13 @@ tasks {
         gradleVersion = properties("gradleVersion").get()
     }
 
+    runIdeForUiTests {
+        systemProperty("robot-server.port", "8082")
+        systemProperty("ide.mac.message.dialogs.as.sheets", "false")
+        systemProperty("jb.privacy.policy.text", "<!--999.999-->")
+        systemProperty("jb.consents.confirmation.enabled", "false")
+    }
+
     patchPluginXml {
         version = properties("pluginVersion")
         sinceBuild = properties("pluginSinceBuild")
@@ -132,13 +135,6 @@ tasks {
                 )
             }
         }
-    }
-
-    runIdeForUiTests {
-        systemProperty("robot-server.port", "8082")
-        systemProperty("ide.mac.message.dialogs.as.sheets", "false")
-        systemProperty("jb.privacy.policy.text", "<!--999.999-->")
-        systemProperty("jb.consents.confirmation.enabled", "false")
     }
 
     publishPlugin {
