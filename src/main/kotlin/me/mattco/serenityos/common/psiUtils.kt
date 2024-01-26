@@ -1,6 +1,7 @@
 package me.mattco.serenityos.common
 
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiWhiteSpace
 import com.intellij.psi.tree.IElementType
 import com.intellij.psi.util.PsiTreeUtil
@@ -34,3 +35,13 @@ inline fun <reified T : PsiElement> PsiElement.descendantOfType(strict: Boolean 
 
 inline fun <reified T : PsiElement> PsiElement.descendentsOfType(): Collection<T> =
     PsiTreeUtil.findChildrenOfType(this, T::class.java)
+
+
+fun PsiElement.ancestors(withSelf: Boolean = false) =
+    generateSequence(if (withSelf) this else this.parent) { if (it is PsiFile) null else it.parent }
+
+fun PsiElement.ancestorPairs(withSelf: Boolean = false) = ancestors(withSelf) zip ancestors(withSelf).drop(1)
+
+inline fun <reified T> PsiElement.ancestorsOfType(withSelf: Boolean = false) = ancestors(withSelf).filterIsInstance<T>()
+
+inline fun <reified T> PsiElement.ancestorOfType(withSelf: Boolean = false) = ancestorsOfType<T>(withSelf).firstOrNull()

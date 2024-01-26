@@ -23,11 +23,28 @@
 File ::= Component
 
 Component ::= ComponentName OPEN_CURLY ComponentBody CLOSE_CURLY {
+    implements="me.mattco.serenityos.gml.psi.interfaces.IGMLComponent"
     mixin="me.mattco.serenityos.gml.psi.mixins.GMLComponentMixin"
+    pin=1
+    recoverWhile=Component_recover
 }
-ComponentName ::= AT NAMESPACE? IDENTIFIER (NAMESPACE IDENTIFIER)*
+
+private Component_recover ::= !(AT | CLOSE_CURLY | IDENTIFIER)
+
+ComponentName ::= AT NAMESPACE? IDENTIFIER (NAMESPACE IDENTIFIER)* {
+    name="component name"
+    pin=1
+}
+
 ComponentBody ::= (Property | Component)*
-Property ::= PropertyIdentifier COLON Value
+Property ::= PropertyIdentifier COLON Value {
+    implements="me.mattco.serenityos.gml.psi.interfaces.IGMLProperty"
+    mixin="me.mattco.serenityos.gml.psi.mixins.GMLPropertyMixin"
+    pin=1
+    recoverWhile=Property_recover
+}
+private Property_recover ::= !(IDENTIFIER | CLOSE_CURLY | AT)
+
 PropertyIdentifier ::= IDENTIFIER
 Value ::=
     Boolean

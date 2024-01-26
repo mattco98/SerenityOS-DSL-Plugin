@@ -52,6 +52,7 @@ COMMENT=\/\/.*|\/\*[^]*?\*
 <YYSTRING> {
   "\\"            { zzMarkedPos += 1; }
   <<EOF>>         { yybegin(YYINITIAL); return STRING; }
+  "\n"            { yybegin(YYINITIAL); return STRING; }
   "\""            { yybegin(YYINITIAL); return STRING; }
   [^]             { }
 }

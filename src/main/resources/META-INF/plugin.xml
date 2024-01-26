@@ -42,11 +42,19 @@
         />
         <annotator
                 language="SerenityOS GML"
-                implementationClass="me.mattco.serenityos.gml.GMLSyntaxAnnotator"
+                implementationClass="me.mattco.serenityos.gml.annotators.GMLSyntaxAnnotator"
+        />
+        <annotator
+                language="SerenityOS GML"
+                implementationClass="me.mattco.serenityos.gml.annotators.GMLErrorAnnotator"
         />
         <codeInsight.lineMarkerProvider
                 language="SerenityOS GML"
                 implementationClass="me.mattco.serenityos.gml.GMLLineMarkerProvider"
+        />
+        <completion.contributor
+                language="SerenityOS GML"
+                implementationClass="me.mattco.serenityos.gml.completions.GMLCompletionContributor"
         />
         <colorSettingsPage implementation="me.mattco.serenityos.gml.GMLColorSettingsPage" />
         <projectService

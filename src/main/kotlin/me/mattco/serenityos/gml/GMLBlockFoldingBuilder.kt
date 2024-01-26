@@ -35,7 +35,9 @@ class GMLBlockFoldingBuilder : CustomFoldingBuilder() {
     private class FoldingVisitor(private val descriptors: MutableList<FoldingDescriptor>) : GMLVisitor() {
         override fun visitComponent(o: GMLComponent) {
             super.visitComponent(o)
-            descriptors += FoldingDescriptor(o, TextRange(o.openCurly.startOffset, o.closeCurly.endOffset))
+            val start = o.openCurly?.startOffset ?: return
+            val end = o.closeCurly?.endOffset ?: return
+            descriptors += FoldingDescriptor(o, TextRange(start, end))
         }
     }
 }

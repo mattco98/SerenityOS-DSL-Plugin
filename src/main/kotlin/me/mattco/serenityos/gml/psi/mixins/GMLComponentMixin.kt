@@ -1,26 +1,37 @@
 package me.mattco.serenityos.gml.psi.mixins
 
 import com.intellij.lang.ASTNode
+import com.intellij.openapi.components.service
 import com.intellij.openapi.project.BaseProjectDirectories.Companion.getBaseDirectories
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
 import com.intellij.psi.util.PsiTreeUtil
 import com.jetbrains.cidr.lang.psi.OCElement
 import com.jetbrains.cidr.lang.psi.OCStructLike
+import me.mattco.serenityos.common.findChildOfType
 import me.mattco.serenityos.common.findChildrenOfType
+import me.mattco.serenityos.gml.Component
+import me.mattco.serenityos.gml.GMLService
 import me.mattco.serenityos.gml.GMLTypes
+import me.mattco.serenityos.gml.Property
 import me.mattco.serenityos.gml.psi.GMLNamedElement
 import me.mattco.serenityos.gml.psi.api.GMLComponent
 import me.mattco.serenityos.gml.psi.singleRef
 
 abstract class GMLComponentMixin(node: ASTNode) : GMLNamedElement(node), GMLComponent {
+    override val gmlComponent: Component?
+        get() = componentName.findChildOfType(GMLTypes.IDENTIFIER)?.text?.let {
+            project.service<GMLService>().lookupComponent(it)
+        }
+
     override fun getReference() = singleRef { resolveCppDecl() }
 
     override fun getNameIdentifier() = componentName
 
     private fun resolveCppDecl(): OCElement? {
         val nameParts = componentName.findChildrenOfType(GMLTypes.IDENTIFIER).mapTo(mutableListOf()) { it.text }
-        check(nameParts.isNotEmpty())
+        if (nameParts.isEmpty())
+            return null
 
         val psiManager = PsiManager.getInstance(project)
 
@@ -30,15 +41,7 @@ abstract class GMLComponentMixin(node: ASTNode) : GMLNamedElement(node), GMLComp
 
             // Perform the same name remapping that GMLCompiler does
             if (nameParts.size == 2) {
-                nameParts[1] = when (nameParts[1]) {
-                    "HorizontalSplitter", "VerticalSplitter" -> "Splitter"
-                    "HorizontalSeparator", "VerticalSeparator" -> "SeparatorWidget"
-                    "HorizontalBoxLayout", "VerticalBoxLayout" -> "BoxLayout"
-                    "HorizontalProgressbar", "VerticalProgressbar" -> "Progressbar"
-                    "DialogButton" -> "Button"
-                    "PasswordBox" -> "TextBox"
-                    else -> nameParts[1]
-                }
+                nameParts[1] = GMLService.normalizeName(nameParts[1])
             } else if (nameParts.size == 3 && nameParts[1] == "Layout" && nameParts[2] == "Spacer") {
                 nameParts[1] = "Layout"
                 nameParts.removeLast()
