@@ -8,7 +8,7 @@ import me.mattco.serenityos.common.findChildOfType
 import me.mattco.serenityos.gml.GMLFile
 import me.mattco.serenityos.gml.GMLFileType
 import me.mattco.serenityos.gml.GMLTypes
-import me.mattco.serenityos.gml.psi.api.GMLComponent
+import me.mattco.serenityos.gml.psi.api.GMLWidget
 
 class GMLPsiFactory(private val project: Project) {
     private fun createFile(text: String, fileName: String = "dummy.gml") = PsiFileFactory
@@ -19,8 +19,8 @@ class GMLPsiFactory(private val project: Project) {
             text
         ) as GMLFile
 
-    fun createIdentifier(name: String) = createFromText<GMLComponent>("@$name {}")
-        ?.componentName
+    fun createIdentifier(name: String) = createFromText<GMLWidget>("@$name {}")
+        ?.widgetName
         ?.findChildOfType(GMLTypes.IDENTIFIER)
         ?: error("Failed to create endpoint")
 

@@ -96,7 +96,7 @@ class GMLColorSettingsPage  : DSLColorSettingsPage(GMLLanguage) {
 
     override fun getAdditionalHighlightingTagToDescriptorMap() = mapOf(
         "NS_NAME" to Highlights.NAMESPACE_NAME,
-        "CLASS_NAME" to Highlights.COMPONENT_NAME,
+        "CLASS_NAME" to Highlights.WIDGET_NAME,
         "PROPERTY" to Highlights.PROPERTY_NAME,
         "BOOLEAN" to Highlights.BOOLEAN
     )
@@ -105,7 +105,7 @@ class GMLColorSettingsPage  : DSLColorSettingsPage(GMLLanguage) {
         "Comments" to Highlights.COMMENT,
 
         "Identifiers//Namespaces" to Highlights.NAMESPACE_NAME,
-        "Identifiers//Classes" to Highlights.COMPONENT_NAME,
+        "Identifiers//Classes" to Highlights.WIDGET_NAME,
         "Identifiers//Properties" to Highlights.PROPERTY_NAME,
 
         "Literals//Numbers" to Highlights.NUMBER,

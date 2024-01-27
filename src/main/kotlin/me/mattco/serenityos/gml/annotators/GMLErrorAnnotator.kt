@@ -1,7 +1,6 @@
 package me.mattco.serenityos.gml.annotators
 
 import ai.grazie.utils.dropPrefix
-import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.openapi.components.service
 import com.intellij.psi.PsiElement
 import me.mattco.serenityos.common.DSLAnnotator
@@ -13,16 +12,16 @@ import me.mattco.serenityos.gml.psi.api.*
 class GMLErrorAnnotator : DSLAnnotator() {
     override fun annotate(element: PsiElement) {
         when (element) {
-            is GMLComponentName -> {
+            is GMLWidgetName -> {
                 val name = element.text.dropPrefix("@")
-                if (element.project.service<GMLService>().lookupComponent(name) == null)
-                    element.highlightError("Unknown component")
+                if (element.project.service<GMLService>().lookupWidget(name) == null)
+                    element.highlightError("Unknown widget")
             }
             is GMLPropertyIdentifier -> {
-                val parentWidget = element.ancestorOfType<GMLComponent>() ?: return
+                val parentWidget = element.ancestorOfType<GMLWidget>() ?: return
                 val gmlService = element.project.service<GMLService>()
-                val component = gmlService.lookupComponent(parentWidget.identWithoutAt) ?: return
-                if (component.getProperty(element.identifier.text, gmlService) == null)
+                val widget = gmlService.lookupWidget(parentWidget.identWithoutAt) ?: return
+                if (widget.getProperty(element.identifier.text, gmlService) == null)
                     element.highlightError("Unknown property")
             }
             is GMLProperty -> {
@@ -56,7 +55,7 @@ class GMLErrorAnnotator : DSLAnnotator() {
             Type.Bitmap -> if (value.string == null) return Lint(value, "Expected String")
             Type.Bool -> if (value.boolean == null) return Lint(value, "Expected bool")
             Type.Color -> if (value.string == null) return Lint(value, "Expected String")
-            Type.Component -> if (value.component == null) return Lint(value, "Expected Component")
+            Type.Widget -> if (value.widget == null) return Lint(value, "Expected Widget")
             Type.Double -> if (value.number == null) return Lint(value, "Expected double")
             is Type.EnumType -> if (value.string == null) return Lint(value, "Expected String")
             is Type.ErrorType -> return Lint(value, type.message)

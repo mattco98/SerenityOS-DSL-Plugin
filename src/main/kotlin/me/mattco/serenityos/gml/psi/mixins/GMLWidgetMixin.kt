@@ -10,25 +10,25 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.jetbrains.cidr.lang.psi.OCElement
 import com.jetbrains.cidr.lang.psi.OCStructLike
 import me.mattco.serenityos.common.findChildrenOfType
-import me.mattco.serenityos.gml.Component
+import me.mattco.serenityos.gml.Widget
 import me.mattco.serenityos.gml.GMLService
 import me.mattco.serenityos.gml.GMLTypes
 import me.mattco.serenityos.gml.psi.GMLNamedElement
-import me.mattco.serenityos.gml.psi.api.GMLComponent
+import me.mattco.serenityos.gml.psi.api.GMLWidget
 import me.mattco.serenityos.gml.psi.singleRef
 
-abstract class GMLComponentMixin(node: ASTNode) : GMLNamedElement(node), GMLComponent {
-    override val gmlComponent: Component?
-        get() = project.service<GMLService>().lookupComponent(identWithoutAt)
+abstract class GMLWidgetMixin(node: ASTNode) : GMLNamedElement(node), GMLWidget {
+    override val gmlWidget: Widget?
+        get() = project.service<GMLService>().lookupWidget(identWithoutAt)
 
-    override val identWithoutAt by lazy { componentName.text.dropPrefix("@") }
+    override val identWithoutAt by lazy { widgetName.text.dropPrefix("@") }
 
     override fun getReference() = singleRef { resolveCppDecl() }
 
-    override fun getNameIdentifier() = componentName
+    override fun getNameIdentifier() = widgetName
 
     private fun resolveCppDecl(): OCElement? {
-        val nameParts = componentName.findChildrenOfType(GMLTypes.IDENTIFIER).mapTo(mutableListOf()) { it.text }
+        val nameParts = widgetName.findChildrenOfType(GMLTypes.IDENTIFIER).mapTo(mutableListOf()) { it.text }
         if (nameParts.isEmpty())
             return null
 

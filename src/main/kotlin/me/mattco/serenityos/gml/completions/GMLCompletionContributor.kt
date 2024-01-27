@@ -5,7 +5,7 @@ import com.intellij.codeInsight.completion.CompletionType
 
 class GMLCompletionContributor : CompletionContributor() {
     init {
-        extend(GMLComponentCompletion)
+        extend(GMLWidgetCompletion)
         extend(GMLPropertyCompletion)
     }
 

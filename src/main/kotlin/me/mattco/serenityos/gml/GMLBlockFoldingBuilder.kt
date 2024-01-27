@@ -10,7 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.refactoring.suggested.endOffset
 import com.intellij.refactoring.suggested.startOffset
 import me.mattco.serenityos.gml.psi.GMLPsiElement
-import me.mattco.serenityos.gml.psi.api.GMLComponent
+import me.mattco.serenityos.gml.psi.api.GMLWidget
 import me.mattco.serenityos.gml.psi.api.GMLVisitor
 
 class GMLBlockFoldingBuilder : CustomFoldingBuilder() {
@@ -35,8 +35,8 @@ class GMLBlockFoldingBuilder : CustomFoldingBuilder() {
         override fun visitPsiElement(o: GMLPsiElement) {
         }
 
-        override fun visitComponent(o: GMLComponent) {
-            super.visitComponent(o)
+        override fun visitWidget(o: GMLWidget) {
+            super.visitWidget(o)
             val start = o.openCurly?.startOffset ?: return
             val end = o.closeCurly?.endOffset ?: return
             descriptors += FoldingDescriptor(o, TextRange(start, end))

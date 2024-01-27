@@ -15,9 +15,9 @@ import me.mattco.serenityos.common.userlandDirectory
 import kotlin.collections.set
 
 interface GMLService {
-    val components: Map<String, Component>
+    val widgets: Map<String, Widget>
 
-    fun lookupComponent(name: String) = components[name]
+    fun lookupWidget(name: String) = widgets[name]
 
     fun load()
 }
@@ -25,7 +25,7 @@ interface GMLService {
 class GMLServiceImpl(
     private val project: Project,
 ) : GMLService {
-    override val components = mutableMapOf<String, Component>()
+    override val widgets = mutableMapOf<String, Widget>()
 
     override fun load() {
         if (!project.isSerenity)
@@ -43,14 +43,14 @@ class GMLServiceImpl(
 
             for (file in propertyFiles) {
                 try {
-                    Json.Default.decodeFromString<List<Component>>(file.readText()).forEach {
-                        components[it.name] = it
+                    Json.Default.decodeFromString<List<Widget>>(file.readText()).forEach {
+                        widgets[it.name] = it
                     }
                 } catch (_: SerializationException) {
                 }
             }
 
-            postComponentLoad()
+            postWidgetsLoad()
         }
     }
 
@@ -64,33 +64,33 @@ class GMLServiceImpl(
                 return
 
             try {
-                val components = Json.Default.decodeFromString<List<Component>>(event.file!!.text)
+                val widgets = Json.Default.decodeFromString<List<Widget>>(event.file!!.text)
                 ApplicationManager.getApplication().runReadAction {
-                    components.forEach {
-                        service.components[it.name] = it
+                    widgets.forEach {
+                        service.widgets[it.name] = it
                     }
                 }
 
-                service.postComponentLoad()
+                service.postWidgetsLoad()
             } catch (_: SerializationException) {
                 // If we fail to serialize the file, it is likely being edited
             }
         }
     }
 
-    private fun postComponentLoad() {
+    private fun postWidgetsLoad() {
         // Widget::layout is special-cased in the compiler and won't appear in the json files
-        val widgetComponent = components["GUI::Widget"] ?: return
-        if (widgetComponent.properties.none { it.name == "layout" }) {
-            components["GUI::Widget"] = Component(
-                widgetComponent.name,
-                widgetComponent.header,
-                widgetComponent.inherits,
-                widgetComponent.description,
-                widgetComponent.properties + Property(
+        val widget = widgets["GUI::Widget"] ?: return
+        if (widget.properties.none { it.name == "layout" }) {
+            widgets["GUI::Widget"] = Widget(
+                widget.name,
+                widget.header,
+                widget.inherits,
+                widget.description,
+                widget.properties + Property(
                     "layout",
-                    "The layout of the component",
-                    "GUI::Component",
+                    "The layout of the widget",
+                    "GUI::Widget",
                 )
             )
         }

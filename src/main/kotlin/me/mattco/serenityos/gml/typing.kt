@@ -4,15 +4,15 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Component(
+data class Widget(
     val name: String,
     val header: String,
     val inherits: String? = null,
     val description: String? = null,
     val properties: List<Property> = emptyList(),
 ) {
-    fun getSuper(service: GMLService): Component? {
-        return inherits?.let(service::lookupComponent)
+    fun getSuper(service: GMLService): Widget? {
+        return inherits?.let(service::lookupWidget)
     }
 
     fun getProperty(name: String, service: GMLService): Property? {
@@ -45,10 +45,6 @@ sealed interface Type {
 
     data object Bool : Type {
         override fun presentation() = "bool"
-    }
-
-    data object Component : Type {
-        override fun presentation() = "Component"
     }
 
     data class Int(val signed: Boolean) : Type {
@@ -100,6 +96,10 @@ sealed interface Type {
         override fun presentation() = types.joinToString(" | ") { it.presentation() }
     }
 
+    data object Widget : Type {
+        override fun presentation() = "Widget"
+    }
+
     class EnumType(val name: kotlin.String) : Type {
         override fun presentation() = name
     }
@@ -119,7 +119,7 @@ sealed interface Type {
                 type == "bool" -> Bool
                 type == "Gfx::Bitmap" -> Bitmap
                 type == "Gfx::Color" -> Color
-                type == "GUI::Component" -> Component
+                type == "GUI::Widget" -> Widget
                 type == "GUI::UIDimension" -> UIDimension
                 type == "GUI::Margins" -> Margins
                 type.startsWith("Array") -> {

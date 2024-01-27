@@ -11,8 +11,8 @@ fun buildGMLSpacingRules(settings: CommonCodeStyleSettings) = SpacingBuilder(set
     simple {
         between(OPEN_CURLY, CLOSE_CURLY).spacing(0, 0, 0, false, 0)
         between(PROPERTY, CLOSE_CURLY).spacing(0, 0, 0, false, 0)
-        between(OPEN_CURLY, COMPONENT_BODY).spacing(0, 0, 1, false, 0)
-        between(COMPONENT_BODY, CLOSE_CURLY).spacing(0, 0, 1, false, 0)
+        between(OPEN_CURLY, WIDGET_BODY).spacing(0, 0, 1, false, 0)
+        between(WIDGET_BODY, CLOSE_CURLY).spacing(0, 0, 1, false, 0)
 
         after(AT).spaces(0)
         before(OPEN_CURLY).spaces(1)
@@ -27,13 +27,13 @@ fun buildGMLSpacingRules(settings: CommonCodeStyleSettings) = SpacingBuilder(set
         for (type in listOf(OPEN_BRACKET, CLOSE_BRACKET, BOOLEAN, STRING, NUMBER, NAMESPACE))
             around(type).spaces(0)
 
-        between(COLON, COMPONENT).spacing(1, 1, 0, false, 0)
+        between(COLON, WIDGET).spacing(1, 1, 0, false, 0)
         between(PROPERTY, PROPERTY).spacing(0, 0, 1, false, 0)
-        between(PROPERTY, COMPONENT).spacing(0, 0, 2, false, 0)
-        between(COMPONENT, PROPERTY).spacing(0, 0, 2, false, 0)
+        between(PROPERTY, WIDGET).spacing(0, 0, 2, false, 0)
+        between(WIDGET, PROPERTY).spacing(0, 0, 2, false, 0)
     }
 
-    contextual(parent = COMPONENT_BODY, right = COMPONENT) { _, left, _ ->
+    contextual(parent = WIDGET_BODY, right = WIDGET) { _, left, _ ->
         val leftType = left?.elementType ?: return@contextual null
         if (leftType == COLON)
             return@contextual null
@@ -43,7 +43,7 @@ fun buildGMLSpacingRules(settings: CommonCodeStyleSettings) = SpacingBuilder(set
 }
 
 fun findIndentForGMLNode(node: ASTNode): Indent? {
-    if (node.elementType == COMPONENT_BODY)
+    if (node.elementType == WIDGET_BODY)
         return Indent.getNormalIndent()
 
     return Indent.getNoneIndent()

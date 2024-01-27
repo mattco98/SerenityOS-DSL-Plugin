@@ -1,12 +1,9 @@
 package me.mattco.serenityos.gml.completions
 
-import ai.grazie.utils.dropPrefix
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.components.service
-import com.intellij.patterns.ElementPattern
-import com.intellij.psi.PsiElement
 import com.intellij.util.ProcessingContext
 import me.mattco.serenityos.common.PsiPattern
 import me.mattco.serenityos.common.ancestorOfType
@@ -14,7 +11,7 @@ import me.mattco.serenityos.common.psiElement
 import me.mattco.serenityos.gml.GMLService
 import me.mattco.serenityos.gml.GMLTypes
 import me.mattco.serenityos.gml.Type
-import me.mattco.serenityos.gml.psi.api.GMLComponent
+import me.mattco.serenityos.gml.psi.api.GMLWidget
 import me.mattco.serenityos.gml.psi.api.GMLPropertyIdentifier
 
 object GMLPropertyCompletion : GMLCompletion() {
@@ -27,10 +24,10 @@ object GMLPropertyCompletion : GMLCompletion() {
         result: CompletionResultSet,
     ) {
         val gmlService = parameters.editor.project!!.service<GMLService>()
-        val parentComponentName =
-            parameters.position.ancestorOfType<GMLComponent>()?.identWithoutAt ?: return
-        val parentComponent = gmlService.lookupComponent(parentComponentName) ?: return
-        val elements = parentComponent.getAllProperties(gmlService).map { property ->
+        val parentWidgetName =
+            parameters.position.ancestorOfType<GMLWidget>()?.identWithoutAt ?: return
+        val parentWidget = gmlService.lookupWidget(parentWidgetName) ?: return
+        val elements = parentWidget.getAllProperties(gmlService).map { property ->
             LookupElementBuilder.create(property.name)
                 .withTypeText(property.type.presentation())
                 .withInsertHandler { context, _ ->

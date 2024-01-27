@@ -20,23 +20,23 @@
     generateTokenAccessors=true
 }
 
-File ::= Component
+File ::= Widget
 
-Component ::= ComponentName OPEN_CURLY ComponentBody? CLOSE_CURLY {
-    implements="me.mattco.serenityos.gml.psi.interfaces.IGMLComponent"
-    mixin="me.mattco.serenityos.gml.psi.mixins.GMLComponentMixin"
+Widget ::= WidgetName OPEN_CURLY WidgetBody? CLOSE_CURLY {
+    implements="me.mattco.serenityos.gml.psi.interfaces.IGMLWidget"
+    mixin="me.mattco.serenityos.gml.psi.mixins.GMLWidgetMixin"
     pin=1
-    recoverWhile=Component_recover
+    recoverWhile=Widget_recover
 }
 
-private Component_recover ::= !(AT | CLOSE_CURLY | IDENTIFIER)
+private Widget_recover ::= !(AT | CLOSE_CURLY | IDENTIFIER)
 
-ComponentName ::= AT NAMESPACE? IDENTIFIER (NAMESPACE IDENTIFIER)* {
-    name="component name"
+WidgetName ::= AT NAMESPACE? IDENTIFIER (NAMESPACE IDENTIFIER)* {
+    name="widget name"
     pin=1
 }
 
-ComponentBody ::= (Property | Component)+
+WidgetBody ::= (Property | Widget)+
 Property ::= PropertyIdentifier COLON Value {
     implements="me.mattco.serenityos.gml.psi.interfaces.IGMLProperty"
     mixin="me.mattco.serenityos.gml.psi.mixins.GMLPropertyMixin"
@@ -52,7 +52,7 @@ Value ::=
   | NUMBER
   | STRING
   | Array
-  | Component
+  | Widget
   // IDENTIFIER is not valid here, however when completion attempts to run inside
   // of an array, the identifier token it inserts completely breaks the grammar. The
   // only way to prevent that completion is to make IDENTIFIER a valid Value and

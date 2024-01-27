@@ -8,7 +8,6 @@ import com.intellij.lang.documentation.DocumentationSettings
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.editor.richcopy.HtmlSyntaxInfoUtil
-import com.intellij.openapi.util.text.HtmlChunk
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
@@ -19,8 +18,8 @@ import com.intellij.psi.util.elementType
 import com.jetbrains.cidr.lang.psi.OCFile
 import com.jetbrains.cidr.lang.psi.OCStructLike
 import me.mattco.serenityos.common.ancestorOfType
-import me.mattco.serenityos.gml.psi.api.GMLComponent
-import me.mattco.serenityos.gml.psi.api.GMLComponentName
+import me.mattco.serenityos.gml.psi.api.GMLWidget
+import me.mattco.serenityos.gml.psi.api.GMLWidgetName
 import me.mattco.serenityos.gml.psi.api.GMLProperty
 import me.mattco.serenityos.gml.psi.api.GMLPropertyIdentifier
 
@@ -51,36 +50,36 @@ class GMLDocumentationProvider : AbstractDocumentationProvider() {
             if (propIdent != null)
                 return propIdent.ancestorOfType<GMLProperty>()
 
-            val compIdent = contextElement?.ancestorOfType<GMLComponentName>()
+            val compIdent = contextElement?.ancestorOfType<GMLWidgetName>()
             if (compIdent != null)
-                return compIdent.ancestorOfType<GMLComponent>()
+                return compIdent.ancestorOfType<GMLWidget>()
 
             return null
         }
 
-        // Also include the '@' for component names
+        // Also include the '@' for widget names
         if (contextElement?.elementType == GMLTypes.AT)
-            return contextElement?.ancestorOfType<GMLComponent>()
+            return contextElement?.ancestorOfType<GMLWidget>()
 
         return super.getCustomDocumentationElement(editor, file, contextElement, targetOffset)
     }
 
     override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
         return when (element) {
-            is GMLComponent -> {
-                val component = element.gmlComponent ?: return null
+            is GMLWidget -> {
+                val widget = element.gmlWidget ?: return null
                 buildString {
                     append(DocumentationMarkup.DEFINITION_START)
-                    appendStyled(component.name, Highlights.COMPONENT_NAME)
-                    if (component.inherits != null) {
+                    appendStyled(widget.name, Highlights.WIDGET_NAME)
+                    if (widget.inherits != null) {
                         append(" : ")
-                        appendStyled(component.inherits, Highlights.COMPONENT_NAME)
+                        appendStyled(widget.inherits, Highlights.WIDGET_NAME)
                     }
                     append(DocumentationMarkup.DEFINITION_END)
 
-                    if (component.description != null) {
+                    if (widget.description != null) {
                         append(DocumentationMarkup.CONTENT_START)
-                        append("<p>${component.description}</p>")
+                        append("<p>${widget.description}</p>")
                         append(DocumentationMarkup.CONTENT_END)
                     }
 

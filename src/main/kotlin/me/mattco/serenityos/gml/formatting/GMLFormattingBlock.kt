@@ -41,7 +41,7 @@ class GMLFormattingBlock(
     override fun buildChildren() = children
 
     override fun getChildAttributes(newChildIndex: Int): ChildAttributes {
-        if (node.elementType == GMLTypes.COMPONENT_BODY || node.elementType == GMLTypes.ARRAY)
+        if (node.elementType == GMLTypes.WIDGET_BODY || node.elementType == GMLTypes.ARRAY)
             return ChildAttributes(Indent.getNormalIndent(), null)
         return ChildAttributes(Indent.getNoneIndent(), null)
     }

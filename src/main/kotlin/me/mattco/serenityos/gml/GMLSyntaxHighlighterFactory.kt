@@ -25,7 +25,7 @@ object Highlights {
     val COLON = OPERATOR.extend("COLON")
 
     val NAMESPACE_NAME = Default.CLASS_NAME.extend("NAMESPACE_NAME")
-    val COMPONENT_NAME = NAMESPACE_NAME.extend("CLASS_NAME")
+    val WIDGET_NAME = NAMESPACE_NAME.extend("WIDGET_NAME")
     val PROPERTY_NAME = Default.INSTANCE_FIELD.extend("PROPERTY_NAME")
 
     private fun TextAttributesKey.extend(name: String) = TextAttributesKey.createTextAttributesKey("GML_$name", this)
