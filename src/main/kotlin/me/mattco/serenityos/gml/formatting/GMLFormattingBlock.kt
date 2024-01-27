@@ -23,7 +23,7 @@ class GMLFormattingBlock(
             GMLFormattingBlock(
                 it,
                 null,
-                findAlignmentForGMLNode(it),
+                null,
                 findIndentForGMLNode(it),
                 spacingBuilder,
             )

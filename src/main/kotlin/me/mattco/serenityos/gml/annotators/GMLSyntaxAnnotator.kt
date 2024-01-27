@@ -14,8 +14,6 @@ class GMLSyntaxAnnotator : DSLAnnotator(), DumbAware {
     override fun annotate(element: PsiElement, holder: Holder) = with(holder) {
         when (element) {
             is GMLValue -> {
-                if (element.boolean != null)
-                    element.highlight(Highlights.BOOLEAN)
                 if (element.string != null) {
                     val lastChar = element.string!!.text.lastOrNull()
                     if (lastChar != null && lastChar != '"')

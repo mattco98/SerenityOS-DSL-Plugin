@@ -12,9 +12,4 @@ class GMLToken(debugName: String) : IElementType(debugName, GMLLanguage) {
 
 class GMLElementType(debugName: String) : IElementType(debugName, GMLLanguage)
 
-abstract class GMLLexerBase : FlexLexer {
-    companion object {
-        @JvmField
-        val SPACE = GMLElementType("SPACE")
-    }
-}
+abstract class GMLLexerBase : FlexLexer

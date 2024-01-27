@@ -5,6 +5,7 @@ import com.intellij.lang.ParserDefinition
 import com.intellij.openapi.project.Project
 import com.intellij.psi.FileViewProvider
 import com.intellij.psi.PsiElement
+import com.intellij.psi.TokenType
 import com.intellij.psi.tree.TokenSet
 
 class GMLParserDefinition : ParserDefinition {
@@ -21,7 +22,7 @@ class GMLParserDefinition : ParserDefinition {
     override fun getStringLiteralElements(): TokenSet = TokenSet.EMPTY
 
     companion object {
-        private val WHITE_SPACES = TokenSet.create(GMLLexerBase.SPACE)
+        private val WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE)
         private val COMMENTS = TokenSet.create(GMLTypes.COMMENT)
     }
 }

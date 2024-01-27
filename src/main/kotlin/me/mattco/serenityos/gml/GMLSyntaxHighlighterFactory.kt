@@ -39,6 +39,7 @@ class GMLSyntaxHighlighter : SyntaxHighlighterBase() {
             COMMENT -> Highlights.COMMENT
             NUMBER -> Highlights.NUMBER
             STRING -> Highlights.STRING
+            BOOLEAN -> Highlights.BOOLEAN
 
             OPEN_CURLY, CLOSE_CURLY -> Highlights.BRACES
             OPEN_BRACKET, CLOSE_BRACKET -> Highlights.BRACKETS

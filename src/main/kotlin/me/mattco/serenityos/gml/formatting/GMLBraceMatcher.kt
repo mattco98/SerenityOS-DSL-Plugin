@@ -3,6 +3,7 @@ package me.mattco.serenityos.gml.formatting
 import com.intellij.lang.BracePair
 import com.intellij.lang.PairedBraceMatcher
 import com.intellij.psi.PsiFile
+import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IElementType
 import me.mattco.serenityos.gml.GMLLexerBase
 import me.mattco.serenityos.gml.GMLTypes
@@ -24,7 +25,7 @@ class GMLBraceMatcher : PairedBraceMatcher {
         private val ALLOWED_CONTEXT_TOKENS = setOf(
             GMLTypes.CLOSE_CURLY,
             GMLTypes.COMMENT,
-            GMLLexerBase.SPACE,
+            TokenType.WHITE_SPACE,
         )
     }
 }

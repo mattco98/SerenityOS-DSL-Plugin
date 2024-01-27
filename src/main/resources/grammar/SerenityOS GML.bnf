@@ -47,12 +47,10 @@ private Property_recover ::= !(IDENTIFIER | CLOSE_CURLY | AT)
 
 PropertyIdentifier ::= IDENTIFIER
 Value ::=
-    Boolean
+    BOOLEAN
   | NUMBER
   | STRING
   | Array
   | Component
-
-Boolean ::= "true" | "false"
 
 Array ::= OPEN_BRACKET [Value (COMMA Value)*] CLOSE_BRACKET

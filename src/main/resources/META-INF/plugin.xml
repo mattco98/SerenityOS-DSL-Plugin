@@ -48,6 +48,9 @@
                 language="SerenityOS GML"
                 implementationClass="me.mattco.serenityos.gml.formatting.GMLBraceMatcher"
         />
+        <lineIndentProvider
+                implementationClass="me.mattco.serenityos.gml.formatting.GMLLineIndentProvider"
+        />
         <lang.documentationProvider
                 language="SerenityOS GML"
                 implementationClass="me.mattco.serenityos.gml.GMLDocumentationProvider"
