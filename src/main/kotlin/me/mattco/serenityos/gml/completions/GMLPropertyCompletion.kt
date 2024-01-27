@@ -28,7 +28,7 @@ object GMLPropertyCompletion : GMLCompletion() {
     ) {
         val gmlService = parameters.editor.project!!.service<GMLService>()
         val parentComponentName =
-            parameters.position.ancestorOfType<GMLComponent>()?.componentName?.text?.dropPrefix("@") ?: return
+            parameters.position.ancestorOfType<GMLComponent>()?.identWithoutAt ?: return
         val parentComponent = gmlService.lookupComponent(parentComponentName) ?: return
         val elements = parentComponent.properties.map { property ->
             LookupElementBuilder.create(property.name)

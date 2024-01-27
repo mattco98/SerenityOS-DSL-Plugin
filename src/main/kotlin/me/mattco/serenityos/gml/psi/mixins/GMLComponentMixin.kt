@@ -1,5 +1,6 @@
 package me.mattco.serenityos.gml.psi.mixins
 
+import ai.grazie.utils.dropPrefix
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.BaseProjectDirectories.Companion.getBaseDirectories
@@ -8,7 +9,6 @@ import com.intellij.psi.PsiManager
 import com.intellij.psi.util.PsiTreeUtil
 import com.jetbrains.cidr.lang.psi.OCElement
 import com.jetbrains.cidr.lang.psi.OCStructLike
-import me.mattco.serenityos.common.findChildOfType
 import me.mattco.serenityos.common.findChildrenOfType
 import me.mattco.serenityos.gml.Component
 import me.mattco.serenityos.gml.GMLService
@@ -19,9 +19,9 @@ import me.mattco.serenityos.gml.psi.singleRef
 
 abstract class GMLComponentMixin(node: ASTNode) : GMLNamedElement(node), GMLComponent {
     override val gmlComponent: Component?
-        get() = componentName.findChildOfType(GMLTypes.IDENTIFIER)?.text?.let {
-            project.service<GMLService>().lookupComponent(it)
-        }
+        get() = project.service<GMLService>().lookupComponent(identWithoutAt)
+
+    override val identWithoutAt by lazy { componentName.text.dropPrefix("@") }
 
     override fun getReference() = singleRef { resolveCppDecl() }
 

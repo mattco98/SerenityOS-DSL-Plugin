@@ -5,7 +5,6 @@ import com.intellij.openapi.components.service
 import com.intellij.psi.PsiElement
 import me.mattco.serenityos.common.DSLAnnotator
 import me.mattco.serenityos.common.ancestorOfType
-import me.mattco.serenityos.common.findChildOfType
 import me.mattco.serenityos.gml.GMLService
 import me.mattco.serenityos.gml.psi.api.GMLComponent
 import me.mattco.serenityos.gml.psi.api.GMLComponentName
@@ -21,8 +20,8 @@ class GMLErrorAnnotator : DSLAnnotator() {
             }
             is GMLPropertyIdentifier -> {
                 val parentWidget = element.ancestorOfType<GMLComponent>() ?: return@with
-                val parentName = parentWidget.findChildOfType<GMLComponentName>()?.text?.dropPrefix("@") ?: return@with
-                val component = element.project.service<GMLService>().lookupComponent(parentName) ?: return@with
+                val component = element.project.service<GMLService>().lookupComponent(parentWidget.identWithoutAt)
+                    ?: return@with
                 if (component.properties.none { it.name == element.identifier.text })
                     element.highlightError("Unknown property")
             }

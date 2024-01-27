@@ -26,7 +26,7 @@ class GMLSyntaxAnnotator : DSLAnnotator(), DumbAware {
                 val parts = element.componentName.findChildrenOfType(GMLTypes.IDENTIFIER)
                 parts.dropLast(1).forEach { it.highlight(Highlights.NAMESPACE_NAME) }
                 if (parts.isNotEmpty())
-                    parts.last().highlight(Highlights.CLASS_NAME)
+                    parts.last().highlight(Highlights.COMPONENT_NAME)
             }
             is GMLProperty -> element.propertyIdentifier.identifier.highlight(Highlights.PROPERTY_NAME)
         }

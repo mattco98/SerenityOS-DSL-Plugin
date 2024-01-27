@@ -5,4 +5,6 @@ import me.mattco.serenityos.gml.Component
 
 interface IGMLComponent : PsiElement {
     val gmlComponent: Component?
+
+    val identWithoutAt: String
 }

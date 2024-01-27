@@ -48,6 +48,10 @@
                 language="SerenityOS GML"
                 implementationClass="me.mattco.serenityos.gml.formatting.GMLBraceMatcher"
         />
+        <lang.documentationProvider
+                language="SerenityOS GML"
+                implementationClass="me.mattco.serenityos.gml.GMLDocumentationProvider"
+        />
         <codeStyleSettingsProvider
                 implementation="me.mattco.serenityos.gml.formatting.GMLCodeStyleSettingsProvider"
         />
