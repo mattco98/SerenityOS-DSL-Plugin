@@ -34,18 +34,8 @@ abstract class GMLComponentMixin(node: ASTNode) : GMLNamedElement(node), GMLComp
 
         val psiManager = PsiManager.getInstance(project)
 
-        // Use the same logic to find the scope as the GMLCompiler
         var startDir: VirtualFile? = if (nameParts[0] == "GUI" || nameParts[0] == "WebView") {
             nameParts[0] = "Lib${nameParts[0]}"
-
-            // Perform the same name remapping that GMLCompiler does
-            if (nameParts.size == 2) {
-                nameParts[1] = GMLService.normalizeName(nameParts[1])
-            } else if (nameParts.size == 3 && nameParts[1] == "Layout" && nameParts[2] == "Spacer") {
-                nameParts[1] = "Layout"
-                nameParts.removeLast()
-            }
-
             project.getBaseDirectories().singleOrNull()?.findChild("Userland")?.findChild("Libraries")
         } else {
             var currFile: VirtualFile? = containingFile.virtualFile

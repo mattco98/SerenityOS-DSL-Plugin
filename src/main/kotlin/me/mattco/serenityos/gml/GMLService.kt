@@ -17,21 +17,9 @@ import kotlin.collections.set
 interface GMLService {
     val components: Map<String, Component>
 
-    fun lookupComponent(name: String) = components[normalizeName(name)]
+    fun lookupComponent(name: String) = components[name]
 
     fun load()
-
-    companion object {
-        fun normalizeName(name: String) = when (name) {
-            "GUI::HorizontalSplitter", "GUI::VerticalSplitter" -> "GUI::Splitter"
-            "GUI::HorizontalSeparator", "GUI::VerticalSeparator" -> "GUI::SeparatorWidget"
-            "GUI::HorizontalBoxLayout", "GUI::VerticalBoxLayout" -> "GUI::BoxLayout"
-            "GUI::HorizontalProgressbar", "GUI::VerticalProgressbar" -> "GUI::Progressbar"
-            "GUI::DialogButton" -> "GUI::Button"
-            "GUI::PasswordBox" -> "GUI::TextBox"
-            else -> name
-        }
-    }
 }
 
 class GMLServiceImpl(
