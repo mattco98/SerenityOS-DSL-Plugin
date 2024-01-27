@@ -53,5 +53,10 @@ Value ::=
   | STRING
   | Array
   | Component
+  // IDENTIFIER is not valid here, however when completion attempts to run inside
+  // of an array, the identifier token it inserts completely breaks the grammar. The
+  // only way to prevent that completion is to make IDENTIFIER a valid Value and
+  // handle the error highlighting in an Annotator
+  | IDENTIFIER
 
 Array ::= OPEN_BRACKET [Value (COMMA Value)*] CLOSE_BRACKET
