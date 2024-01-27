@@ -61,6 +61,8 @@ class GMLServiceImpl(
                 } catch (_: SerializationException) {
                 }
             }
+
+            postComponentLoad()
         }
     }
 
@@ -80,9 +82,29 @@ class GMLServiceImpl(
                         service.components[it.name] = it
                     }
                 }
+
+                service.postComponentLoad()
             } catch (_: SerializationException) {
                 // If we fail to serialize the file, it is likely being edited
             }
+        }
+    }
+
+    private fun postComponentLoad() {
+        // Widget::layout is special-cased in the compiler and won't appear in the json files
+        val widgetComponent = components["GUI::Widget"] ?: return
+        if (widgetComponent.properties.none { it.name == "layout" }) {
+            components["GUI::Widget"] = Component(
+                widgetComponent.name,
+                widgetComponent.header,
+                widgetComponent.inherits,
+                widgetComponent.description,
+                widgetComponent.properties + Property(
+                    "layout",
+                    "The layout of the component",
+                    "GUI::Component",
+                )
+            )
         }
     }
 }

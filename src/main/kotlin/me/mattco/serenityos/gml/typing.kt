@@ -47,6 +47,10 @@ sealed interface Type {
         override fun presentation() = "bool"
     }
 
+    data object Component : Type {
+        override fun presentation() = "Component"
+    }
+
     data class Int(val signed: Boolean) : Type {
         override fun presentation() = if (signed) "i64" else "u64"
     }
@@ -115,6 +119,7 @@ sealed interface Type {
                 type == "bool" -> Bool
                 type == "Gfx::Bitmap" -> Bitmap
                 type == "Gfx::Color" -> Color
+                type == "GUI::Component" -> Component
                 type == "GUI::UIDimension" -> UIDimension
                 type == "GUI::Margins" -> Margins
                 type.startsWith("Array") -> {

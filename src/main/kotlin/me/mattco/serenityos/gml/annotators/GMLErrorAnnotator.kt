@@ -56,6 +56,7 @@ class GMLErrorAnnotator : DSLAnnotator() {
             Type.Bitmap -> if (value.string == null) return Lint(value, "Expected String")
             Type.Bool -> if (value.boolean == null) return Lint(value, "Expected bool")
             Type.Color -> if (value.string == null) return Lint(value, "Expected String")
+            Type.Component -> if (value.component == null) return Lint(value, "Expected Component")
             Type.Double -> if (value.number == null) return Lint(value, "Expected double")
             is Type.EnumType -> if (value.string == null) return Lint(value, "Expected String")
             is Type.ErrorType -> return Lint(value, type.message)
