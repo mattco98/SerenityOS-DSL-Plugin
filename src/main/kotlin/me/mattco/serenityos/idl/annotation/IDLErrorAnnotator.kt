@@ -7,16 +7,12 @@ import com.intellij.psi.PsiWhiteSpace
 import me.mattco.serenityos.common.DSLAnnotator
 import me.mattco.serenityos.common.prevSiblings
 import me.mattco.serenityos.idl.psi.IDLDeclaration
-import me.mattco.serenityos.idl.psi.api.IDLCallbackInterface
-import me.mattco.serenityos.idl.psi.api.IDLExtendedAttributeList
-import me.mattco.serenityos.idl.psi.api.IDLIdent
-import me.mattco.serenityos.idl.psi.api.IDLInterface
-import me.mattco.serenityos.idl.psi.api.IDLInterfaceMixin
+import me.mattco.serenityos.idl.psi.api.*
 import java.net.MalformedURLException
 import java.net.URL
 
 class IDLErrorAnnotator : DSLAnnotator() {
-    override fun annotate(element: PsiElement, holder: Holder) = with(holder) {
+    override fun annotate(element: PsiElement) {
         if (element is IDLIdent) {
             if (element.reference != null && element.reference?.resolve() == null) {
                 element.highlightError("Unknown type ${element.text}")

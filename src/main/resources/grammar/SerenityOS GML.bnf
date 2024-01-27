@@ -46,6 +46,7 @@ Property ::= PropertyIdentifier COLON Value {
 private Property_recover ::= !(IDENTIFIER | CLOSE_CURLY | AT)
 
 PropertyIdentifier ::= IDENTIFIER
+
 Value ::=
     BOOLEAN
   | NUMBER

@@ -10,7 +10,7 @@ import me.mattco.serenityos.idl.Highlights
 import me.mattco.serenityos.idl.psi.api.*
 
 class IDLSyntaxAnnotator : DSLAnnotator(), DumbAware {
-    override fun annotate(element: PsiElement, holder: Holder) = with(holder) {
+    override fun annotate(element: PsiElement) {
         when (element) {
             is IDLImportPath ->
                 TextRange(element.openAngle.startOffset, element.closeAngle.endOffset).highlight(Highlights.IMPORT_PATH)

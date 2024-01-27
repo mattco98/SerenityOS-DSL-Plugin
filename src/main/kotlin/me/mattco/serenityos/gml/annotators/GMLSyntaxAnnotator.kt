@@ -11,7 +11,7 @@ import me.mattco.serenityos.gml.psi.api.GMLProperty
 import me.mattco.serenityos.gml.psi.api.GMLValue
 
 class GMLSyntaxAnnotator : DSLAnnotator(), DumbAware {
-    override fun annotate(element: PsiElement, holder: Holder) = with(holder) {
+    override fun annotate(element: PsiElement) {
         when (element) {
             is GMLValue -> {
                 if (element.string != null) {

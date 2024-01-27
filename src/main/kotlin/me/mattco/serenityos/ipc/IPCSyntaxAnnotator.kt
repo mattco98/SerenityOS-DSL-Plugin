@@ -4,14 +4,10 @@ import com.intellij.openapi.project.DumbAware
 import com.intellij.psi.PsiElement
 import me.mattco.serenityos.common.DSLAnnotator
 import me.mattco.serenityos.common.findChildrenOfType
-import me.mattco.serenityos.ipc.psi.api.IPCAttributeList
-import me.mattco.serenityos.ipc.psi.api.IPCEndpoint
-import me.mattco.serenityos.ipc.psi.api.IPCEndpointFunction
-import me.mattco.serenityos.ipc.psi.api.IPCIncludePath
-import me.mattco.serenityos.ipc.psi.api.IPCType
+import me.mattco.serenityos.ipc.psi.api.*
 
 class IPCSyntaxAnnotator : DSLAnnotator(), DumbAware {
-    override fun annotate(element: PsiElement, holder: Holder) = with(holder) {
+    override fun annotate(element: PsiElement) {
         when (element) {
             is IPCEndpoint -> element.identifier.highlight(Highlights.ENDPOINT_NAME)
             is IPCEndpointFunction -> {

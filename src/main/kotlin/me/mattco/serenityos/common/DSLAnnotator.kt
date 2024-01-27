@@ -8,35 +8,36 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 
 abstract class DSLAnnotator : Annotator {
-    final override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        annotate(element, Holder(holder))
+    private lateinit var holder: AnnotationHolder
+
+    override fun annotate(element: PsiElement, holder: AnnotationHolder) {
+        this.holder = holder
+        annotate(element)
     }
 
-    protected abstract fun annotate(element: PsiElement, holder: Holder)
+    abstract fun annotate(element: PsiElement)
 
-    data class Holder(private val holder: AnnotationHolder) {
-        private fun newAnnotation(severity: HighlightSeverity, message: String? = null) = if (message == null) {
-            holder.newSilentAnnotation(severity)
-        } else holder.newAnnotation(severity, message)
+    private fun newAnnotation(severity: HighlightSeverity, message: String? = null) = if (message == null) {
+        holder.newSilentAnnotation(severity)
+    } else holder.newAnnotation(severity, message)
 
-        fun PsiElement.highlight(attribute: TextAttributesKey) {
-            newAnnotation(HighlightSeverity.INFORMATION)
-                .range(this)
-                .textAttributes(attribute)
-                .create()
-        }
+    fun PsiElement.highlight(attribute: TextAttributesKey) {
+        newAnnotation(HighlightSeverity.INFORMATION)
+            .range(this)
+            .textAttributes(attribute)
+            .create()
+    }
 
-        fun TextRange.highlight(attribute: TextAttributesKey) {
-            newAnnotation(HighlightSeverity.INFORMATION)
-                .range(this)
-                .textAttributes(attribute)
-                .create()
-        }
+    fun TextRange.highlight(attribute: TextAttributesKey) {
+        newAnnotation(HighlightSeverity.INFORMATION)
+            .range(this)
+            .textAttributes(attribute)
+            .create()
+    }
 
-        fun PsiElement.highlightError(message: String) {
-            newAnnotation(HighlightSeverity.ERROR, message)
-                .range(this)
-                .create()
-        }
+    fun PsiElement.highlightError(message: String) {
+        newAnnotation(HighlightSeverity.ERROR, message)
+            .range(this)
+            .create()
     }
 }

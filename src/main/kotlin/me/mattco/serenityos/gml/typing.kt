@@ -75,7 +75,7 @@ sealed interface Type {
         override fun presentation() = "Margins"
     }
 
-    class Array(private val min: kotlin.Int, private val max: kotlin.Int, private val inner: Type) : Type {
+    class Array(val min: kotlin.Int, val max: kotlin.Int, val inner: Type) : Type {
         override fun presentation(): kotlin.String = buildString {
             append(inner.presentation().let {
                 if (inner is Variant) "($it)" else it
