@@ -8,6 +8,7 @@ import com.intellij.lang.documentation.DocumentationSettings
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.editor.richcopy.HtmlSyntaxInfoUtil
+import com.intellij.openapi.util.text.HtmlChunk
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
@@ -71,6 +72,10 @@ class GMLDocumentationProvider : AbstractDocumentationProvider() {
                 buildString {
                     append(DocumentationMarkup.DEFINITION_START)
                     appendStyled(component.name, Highlights.COMPONENT_NAME)
+                    if (component.inherits != null) {
+                        append(" : ")
+                        appendStyled(component.inherits, Highlights.COMPONENT_NAME)
+                    }
                     append(DocumentationMarkup.DEFINITION_END)
 
                     if (component.description != null) {
