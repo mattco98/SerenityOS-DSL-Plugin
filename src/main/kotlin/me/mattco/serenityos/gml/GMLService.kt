@@ -7,6 +7,7 @@ import com.intellij.psi.PsiManager
 import com.intellij.psi.PsiTreeChangeEvent
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScopes
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import me.mattco.serenityos.common.DSLTreeChangeListener
 import me.mattco.serenityos.common.isSerenity
@@ -57,8 +58,7 @@ class GMLServiceImpl(
                     Json.Default.decodeFromString<List<Component>>(file.readText()).forEach {
                         components[it.name] = it
                     }
-                } catch (e: Throwable) {
-                    throw e
+                } catch (_: SerializationException) {
                 }
             }
         }
@@ -73,11 +73,15 @@ class GMLServiceImpl(
             if (event.file?.name != "property-definitions.json")
                 return
 
-            val components = Json.Default.decodeFromString<List<Component>>(event.file!!.text)
-            ApplicationManager.getApplication().runReadAction {
-                components.forEach {
-                    service.components[it.name] = it
+            try {
+                val components = Json.Default.decodeFromString<List<Component>>(event.file!!.text)
+                ApplicationManager.getApplication().runReadAction {
+                    components.forEach {
+                        service.components[it.name] = it
+                    }
                 }
+            } catch (_: SerializationException) {
+                // If we fail to serialize the file, it is likely being edited
             }
         }
     }
