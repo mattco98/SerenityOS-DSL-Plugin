@@ -10,7 +10,19 @@ data class Component(
     val inherits: String? = null,
     val description: String? = null,
     val properties: List<Property> = emptyList(),
-)
+) {
+    fun getSuper(service: GMLService): Component? {
+        return inherits?.let(service::lookupComponent)
+    }
+
+    fun getProperty(name: String, service: GMLService): Property? {
+        return properties.find { it.name == name } ?: getSuper(service)?.getProperty(name, service)
+    }
+
+    fun getAllProperties(service: GMLService): List<Property> {
+        return properties + getSuper(service)?.getAllProperties(service).orEmpty()
+    }
+}
 
 @Serializable
 data class Property(

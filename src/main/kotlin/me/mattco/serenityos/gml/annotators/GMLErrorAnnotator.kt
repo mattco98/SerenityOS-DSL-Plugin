@@ -20,9 +20,9 @@ class GMLErrorAnnotator : DSLAnnotator() {
             }
             is GMLPropertyIdentifier -> {
                 val parentWidget = element.ancestorOfType<GMLComponent>() ?: return@with
-                val component = element.project.service<GMLService>().lookupComponent(parentWidget.identWithoutAt)
-                    ?: return@with
-                if (component.properties.none { it.name == element.identifier.text })
+                val gmlService = element.project.service<GMLService>()
+                val component = gmlService.lookupComponent(parentWidget.identWithoutAt) ?: return@with
+                if (component.getProperty(element.identifier.text, gmlService) == null)
                     element.highlightError("Unknown property")
             }
         }

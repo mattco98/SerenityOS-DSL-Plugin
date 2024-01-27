@@ -30,7 +30,7 @@ object GMLPropertyCompletion : GMLCompletion() {
         val parentComponentName =
             parameters.position.ancestorOfType<GMLComponent>()?.identWithoutAt ?: return
         val parentComponent = gmlService.lookupComponent(parentComponentName) ?: return
-        val elements = parentComponent.properties.map { property ->
+        val elements = parentComponent.getAllProperties(gmlService).map { property ->
             LookupElementBuilder.create(property.name)
                 .withTypeText(property.type.presentation())
                 .withInsertHandler { context, _ ->
